@@ -27,6 +27,15 @@ on:
 permissions:
   contents: write
 
+# Phase 30.6 — serialize pipeline runs. A scheduled cron and a manual
+# dispatch firing close together would both try to commit to main and
+# race on push. With concurrency.group set, GitHub Actions queues the
+# second invocation behind the first instead of running them in parallel.
+# cancel-in-progress: false → never kill a real refresh midway through.
+concurrency:
+  group: ccqs-daily-pipeline
+  cancel-in-progress: false
+
 jobs:
   # ----------------------------------------------------------------------
   # DST-aware time guard. Always runs (cheap), but only signals

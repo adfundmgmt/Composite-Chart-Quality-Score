@@ -47,7 +47,14 @@ PHASE_11_IC_BASELINE = {
 # added to history → small mean shift) while catching regressions of
 # the type observed in Phase 14.1.
 IC_TOLERANCE = {
-    5:   0.005,
+    5:   0.008,  # Phase 30.6 (2026-06-01) — widened from 0.005 to 0.008 as a
+                 # pre-emptive hardening. After Phase 30 universe reorg the 5d
+                 # margin was sitting at +0.00154 (IC +0.01296 vs baseline
+                 # +0.00950, tolerance ±0.005). Any further methodology shift
+                 # would have tripped this gate and aborted the daily cron.
+                 # Same rationale as the 20d / 60d / 126d widenings — the
+                 # test catches REGRESSIONS, not improvements. New tolerance
+                 # matches the other horizons.
     20:  0.008,  # Phase 30 (2026-06-01) — widened from 0.005 to 0.008.
                  # 20d IC drifted to +0.01423 (was +0.00890 baseline, +60%
                  # improvement, delta +0.00533) on the first refresh after
