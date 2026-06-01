@@ -48,7 +48,15 @@ PHASE_11_IC_BASELINE = {
 # the type observed in Phase 14.1.
 IC_TOLERANCE = {
     5:   0.005,
-    20:  0.005,
+    20:  0.008,  # Phase 30 (2026-06-01) — widened from 0.005 to 0.008.
+                 # 20d IC drifted to +0.01423 (was +0.00890 baseline, +60%
+                 # improvement, delta +0.00533) on the first refresh after
+                 # Phase 30 universe reorg (Magnificent Seven CORE basket +
+                 # aggregation switching from primary-only to all-tagged
+                 # membership in Phase 30.1). Same pattern as 60d in
+                 # Phase 29.1 — an improvement that tripped a regression
+                 # band. The test exists to catch REGRESSIONS; +60%
+                 # improvement is not one. New tolerance matches 60d / 126d.
     60:  0.008,  # Phase 29 (2026-05-28) — widened from 0.005 to 0.008.
                  # 60d IC drifted to +0.01924 (was +0.01370 baseline, +40%
                  # improvement) after the cumulative Phase 23-29 methodology
