@@ -172,21 +172,64 @@ jobs:
             echo "No dashboard cache changes to commit."
             exit 0
           fi
-          git commit -m "ci: refresh dashboard cache ($(date -u +%Y-%m-%d))"
-          # Robust push with rebase-on-conflict retry. The pipeline runs for
-          # ~15-20 minutes; in that window a developer may push to main, which
-          # would cause a non-fast-forward rejection of our push. Retry with
-          # rebase up to 3 times to absorb concurrent commits.
+
+          # Phase 30.8 (2026-06-03) — robust commit-and-push that survives
+          # concurrent runs writing the same binary parquets.
+          #
+          # Prior implementation used `git pull --rebase` which fails on
+          # binary parquet conflicts (today's Run #20 failed this way:
+          # Run #19 had committed slightly-different parquets, rebase
+          # couldn't auto-merge the binaries, all 3 push retries failed,
+          # and Run #20's fresh post-close data was discarded).
+          #
+          # New approach: snapshot our freshly-computed parquets, reset
+          # working tree to latest origin/main, re-apply our parquets on
+          # top, commit, push. The LATER run's data always wins — which
+          # is the correct semantic since by construction the later run
+          # has fresher OHLCV input.
+          #
+          # The retry loop handles the (rare) case where another commit
+          # lands between our fetch and our push.
+
+          # 1. Save freshly-computed parquets out of the working tree
+          SAVE_DIR=$(mktemp -d)
+          cp -a data/cache/dashboard "$SAVE_DIR/"
+
           for attempt in 1 2 3; do
+            # 2. Get latest remote state
             git fetch origin main
-            git pull --rebase origin main
-            if git push origin HEAD:main; then
-              echo "Push succeeded on attempt $attempt"
+
+            # 3. Reset working tree to latest origin/main, discarding
+            #    any prior loop-iteration commits
+            git reset --hard origin/main
+
+            # 4. Re-apply our parquets on top of latest main
+            rm -rf data/cache/dashboard
+            cp -a "$SAVE_DIR/dashboard" data/cache/dashboard
+
+            # 5. Stage and check for diff vs latest main
+            git add data/cache/dashboard/
+            if git diff --cached --quiet; then
+              echo "No dashboard cache changes vs latest main after re-baseline; another run already committed equivalent data."
+              rm -rf "$SAVE_DIR"
               exit 0
             fi
-            echo "Push attempt $attempt failed; retrying after fetch+rebase..."
+
+            # 6. Commit
+            git commit -m "ci: refresh dashboard cache ($(date -u +%Y-%m-%d))"
+
+            # 7. Push
+            if git push origin HEAD:main; then
+              echo "Push succeeded on attempt $attempt"
+              rm -rf "$SAVE_DIR"
+              exit 0
+            fi
+
+            echo "Push attempt $attempt failed (likely a concurrent commit landed in the same window); re-fetching and retrying..."
             sleep 5
           done
+
+          rm -rf "$SAVE_DIR"
           echo "Push failed after 3 attempts"
           exit 1
 
