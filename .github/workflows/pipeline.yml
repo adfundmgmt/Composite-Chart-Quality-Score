@@ -2,25 +2,34 @@ name: Daily CCQS Pipeline
 
 on:
   schedule:
-    # Phase 26 (2026-05-28): moved from 4:30 PM ET to 4:05 PM ET (5 min
-    # after NYSE close at 4:00 PM ET).
+    # Phase 30.7 (2026-06-02): moved from 4:05 PM ET to 4:00 PM ET
+    # = 1:00 PM PT exact, per user request.
+    # Phase 26 had moved it from 4:30 PM ET to 4:05 PM ET originally.
     #
-    # Mon-Fri, fires at exactly 4:05 PM ET year-round (5 min after market
-    # close). GitHub Actions cron is UTC and has no DST awareness, so we
-    # use TWO cron entries — one for each DST regime — and gate the
-    # actual pipeline behind a TZ-aware guard job. Only one of the two
-    # cron firings actually does work each day; the other is a no-op
-    # within ~10 seconds of the guard check.
+    # Mon-Fri, fires at exactly 4:00 PM ET / 1:00 PM PT year-round.
+    # GitHub Actions cron is UTC and has no DST awareness, so we use
+    # TWO cron entries — one for each DST regime — and gate the actual
+    # pipeline behind a TZ-aware guard job. Only one of the two cron
+    # firings actually does work each day; the other is a no-op within
+    # ~10 seconds of the guard check.
     #
-    #   - cron: '5 20 * * 1-5'  → 4:05 PM ET during EDT (Mar-Nov)
-    #   - cron: '5 21 * * 1-5'  → 4:05 PM ET during EST (Nov-Mar)
+    #   - cron: '0 20 * * 1-5'  → 4:00 PM ET during EDT (Mar-Nov) = 1:00 PM PT
+    #   - cron: '0 21 * * 1-5'  → 4:00 PM ET during EST (Nov-Mar) = 1:00 PM PT
     #
     # The `guard` job below uses TZ=America/New_York to check the actual
     # ET hour and emits should_run=true ONLY when ET hour == 16. The
     # `refresh` job has `needs: guard` and `if: needs.guard.outputs.should_run == 'true'`,
-    # so the heavy pipeline executes exactly once per weekday at 4:05 PM ET.
-    - cron: '5 20 * * 1-5'
-    - cron: '5 21 * * 1-5'
+    # so the heavy pipeline executes exactly once per weekday at 1:00 PM PT.
+    #
+    # METHODOLOGY NOTE: 4:00 PM ET is the moment of NYSE closing auction
+    # print. yfinance closing-bar data typically has a 1-3 minute lag,
+    # so today's close may not be fully reflected if the cron fires at
+    # the second 4:00:00 PM ET. The data-quality firewall + cache-
+    # freshness gate will catch any case where today's close is missing.
+    # If this becomes a recurring issue, shift cron forward by 5 minutes
+    # (back to '5 20' / '5 21').
+    - cron: '0 20 * * 1-5'
+    - cron: '0 21 * * 1-5'
   workflow_dispatch: {}  # manual trigger from Actions UI (bypasses guard)
 
 # Need write access to push the refreshed dashboard cache back to main.
