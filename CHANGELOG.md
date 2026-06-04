@@ -2,12 +2,33 @@
 
 Phase-by-phase implementation history. Companion to `SPEC.md` (authoritative methodology document) and `USER_GUIDE.md` (user-facing interpretation manual).
 
-## Phase 32 — "Focus 25" model watchlist (2026-06-03) — DISPLAY-LAYER ONLY
+## Phase 32R — Focus 25 reverted to private local-only tooling (2026-06-03)
+
+**Decision: Focus 25 must not appear on the public Streamlit dashboard or in
+the GitHub repo.** The Phase 32 public surface (commit `0b71290`) is reverted:
+the dashboard section, builder module (`compute/focus25.py`), pipeline wiring,
+data-loader functions, committed focus25 artifacts, and the USER_GUIDE section
+are all removed. `requirements.txt` touched to force a Streamlit redeploy
+without the page.
+
+Focus 25 now lives entirely as **local-only tooling** (`scripts/focus25_local.py`,
+gitignored) that prints the daily report to the Claude Code chat on request.
+The track record (`focus25_history.parquet`) is stored locally and gitignored,
+seeded from the original 2026-06-03 deploy snapshot so the history starts from
+the original deploy date. The validated B→A definition (28-calendar-day window)
+and all guardrails carry over unchanged.
+
+No methodology change in either direction — Phase 32 and this revert are both
+display/tooling only. All scored values bit-identical throughout.
+
+## Phase 32 — "Focus 25" model watchlist (2026-06-03) — DISPLAY-LAYER ONLY [REVERTED by 32R]
 
 Implements the Phase 31 validated configuration (P2: top-25 by CCQS, 4-week
 rebalance, equal-weight) as a dashboard watchlist + exportable artifact.
 **No methodology change** — consumes existing pipeline outputs only. CCQS,
 components, STATE_WEIGHTS, classifiers, regime logic all untouched.
+**Reverted to private local tooling in Phase 32R (see above) — this public
+surface is no longer in the repo.**
 
 ### What shipped
 - `compute/focus25.py` — frozen-membership builder. Selects top-25 by CCQS on

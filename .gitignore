@@ -80,3 +80,12 @@ coverage.xml
 dmypy.json
 .pyre/
 .pytype/
+
+# Phase 32R — Focus 25 is PRIVATE local-only tooling (never on GitHub/Streamlit)
+scripts/focus25_local.py
+focus25_history.*
+focus25_meta_seed.json
+data/cache/focus25_*
+
+# Research records (Phase 30R/31/33 reports, pre-registrations, data) — local only
+research_records/

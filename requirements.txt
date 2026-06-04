@@ -1,3 +1,5 @@
+# Phase 32R (2026-06-03): pinned versions unchanged; comment touched to force
+# Streamlit Cloud to rebuild WITHOUT the reverted Focus 25 page (private now).
 # Phase 29 (2026-05-28): pinned versions unchanged; comment touched to
 # force Streamlit Cloud to rebuild and pick up Phase 29 cleanup:
 # (A) FEATURE_ORDER cut from 138 → 108 (30 unused features dropped from
