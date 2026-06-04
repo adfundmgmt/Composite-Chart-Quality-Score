@@ -191,6 +191,49 @@ continues to use the ALL_CAPS internal label):
 
 ---
 
+## E0. Focus 25 — the model watchlist (Phase 32)
+
+The **Focus 25** section on the dashboard implements the Phase 31 validated
+configuration as a recurring watchlist: **top-25 by CCQS, refreshed every
+4 weeks, equal-weight reference (4% each).**
+
+**What it is.** A frozen-membership watchlist. On each 4-week refresh it takes
+the top 25 names by CCQS — pure rank, no setup/B→A/manual filters (Phase 31
+showed overlays-as-hard-filters degrade results). Between refreshes the
+membership is **frozen**: daily score changes update the displayed values but
+do not change who is in the list. This mirrors the 4-week rebalance discipline
+that tested best.
+
+**How to read it.**
+- **Refresh dates** — "last refresh" / "next refresh" are shown at the top.
+  Membership only changes on a refresh; adds/drops (with exit reason: rank
+  decay vs data exclusion) are listed on refresh days.
+- **Basket concentration** — counts per theme are shown above the table. An
+  **amber chip** appears when any single basket exceeds 8 names (a third of the
+  book): the ranking does not diversify, so spreading risk across themes is
+  *your* discretionary layer.
+- **B→A flag** — a "● B→A" mark means the name's weekly CCQS grade landed on A
+  from B within the last 4 calendar weeks (the Phase 28/29 validated early-
+  emergence finding). It is an **annotation only — never a selection filter.**
+- **Equal-weight framing** — "4% each" is reference framing. Sizing by score
+  (Phase 31 P10) and by inverse-volatility (Phase 33) were both tested and
+  rejected; equal-weight is the reference. Actual sizing, entries, and stops
+  are your discretionary layer.
+
+**Honest guardrails (Phase 31).** Out-of-sample the top-25 beat SPY and the
+full universe but did **not** clear luck-adjusted significance (it could not be
+distinguished from the luckiest random-25 baskets in the 2024-2026 test). Use
+it as a **discretionary watchlist, not an autopilot strategy.** Validated
+horizons are 4-week to 126-day; it is **not** for sub-2-week trading (turnover
+costs dominate below that cadence). Depth 20-50 and cadence 4-13 weeks are the
+usable envelope; the regime overlay is an optional drawdown-preference choice,
+not a return enhancer.
+
+A live track record (`focus25_history.parquet`) accrues from the first refresh
+forward — every refresh's constituents, scores, and basket counts are stored.
+
+---
+
 ## E. Specific guidance by use case
 
 ### E.1 Quality investing

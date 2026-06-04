@@ -215,6 +215,32 @@ def load_themes_data() -> pd.DataFrame:
 
 
 # ---------------------------------------------------------------------------
+# Focus 25 watchlist (Phase 32 — display-layer only)
+# ---------------------------------------------------------------------------
+
+@st.cache_data(ttl=TTL, show_spinner=False)
+def load_focus25() -> tuple[pd.DataFrame, dict]:
+    """Load the Focus 25 current constituents + meta (refresh dates,
+    adds/drops, basket concentration). Returns (df, meta). Empty if the
+    pipeline has not yet built the watchlist artifacts."""
+    cur_path = DASHBOARD_DIR / "focus25_current.parquet"
+    if not cur_path.exists():
+        return pd.DataFrame(), {}
+    df = pd.read_parquet(cur_path)
+    meta = _read_json("focus25_meta.json")
+    return df, meta
+
+
+@st.cache_data(ttl=TTL, show_spinner=False)
+def load_focus25_history() -> pd.DataFrame:
+    """Load the Focus 25 refresh history (live track record)."""
+    p = DASHBOARD_DIR / "focus25_history.parquet"
+    if not p.exists():
+        return pd.DataFrame()
+    return pd.read_parquet(p)
+
+
+# ---------------------------------------------------------------------------
 # Anomalies & derived T-vs-T-1 change lists
 # ---------------------------------------------------------------------------
 

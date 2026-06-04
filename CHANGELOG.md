@@ -2,6 +2,63 @@
 
 Phase-by-phase implementation history. Companion to `SPEC.md` (authoritative methodology document) and `USER_GUIDE.md` (user-facing interpretation manual).
 
+## Phase 32 — "Focus 25" model watchlist (2026-06-03) — DISPLAY-LAYER ONLY
+
+Implements the Phase 31 validated configuration (P2: top-25 by CCQS, 4-week
+rebalance, equal-weight) as a dashboard watchlist + exportable artifact.
+**No methodology change** — consumes existing pipeline outputs only. CCQS,
+components, STATE_WEIGHTS, classifiers, regime logic all untouched.
+
+### What shipped
+- `compute/focus25.py` — frozen-membership builder. Selects top-25 by CCQS on
+  the latest pipeline date; refreshes every 20 trading days (4 weeks);
+  membership frozen between refreshes (daily values update, membership does
+  not). Writes `focus25_current.parquet`, appends `focus25_history.parquet`
+  (live track record), writes `focus25_meta.json`.
+- Wired into `compute/build_dashboard_cache.py` (after regime context;
+  wrapped in try/except so it can never break the cache commit).
+- `app/utils/data_loader.py` — `load_focus25()`, `load_focus25_history()`.
+- `app/streamlit_app.py` — "Focus 25" section (Section 1.5): refresh/freeze
+  status, basket-concentration block with amber chip >8 names, adds/drops on
+  refresh, per-name table (rank, ticker, CCQS, grade, tier, state, setup, B→A
+  flag, basket, % from 52w high, ADR%), and the required guardrail caption.
+
+### Selection rule (fixed)
+Pure top-25 by score — no B→A filter, no setup filter, no manual overrides
+(Phase 31 P9/P10 precedent: overlays-as-hard-filters degrade results). No
+caps, no quotas. Equal-weight reference (4% each); score-weighting (Phase 31
+P10) and inverse-vol (Phase 33) were tested and rejected.
+
+### B→A flag (annotation only)
+Definition: weekly CCQS grade landing on A from B within **28 calendar days**
+(4 calendar weeks) of the latest pipeline date. Calendar window (not weekly-
+snapshot count) so a transition ~4 weeks old is still flagged. Validated
+spot-check on 2026-06-03 data: flagged set within top-25 = {ACMR, BLDP, CORZ,
+CRWD, ILMN, TECK} — exactly the 6 expected names (6/6).
+
+  NOTE on the window: the initial snapshot-count implementation (`iloc[-4:]`,
+  4 weekly rows) flagged only CRWD + ILMN, because the BLDP/ACMR/TECK/CORZ
+  B→A landings (2026-05-08) are the 5th weekly row back — yet only 26 days
+  before 06-03, i.e. within 4 *calendar* weeks. Switching to a 28-day calendar
+  window reproduced all 6. This was caught by the pre-registered validation
+  gate, investigated, and resolved before deploy (not a bug — a window-
+  definition match).
+
+### Basket concentration
+Counts per primary basket shown above the table; amber chip when any single
+basket > 8 names. Today: top basket = Memory and Storage (4) — no amber.
+Concentration vector stored in history each refresh. Display-layer only;
+selection rule stays pure top-25 (no theme caps).
+
+### Validation (all PASS before deploy)
+- 91/91 pytest (incl. 11/11 pipeline sanity)
+- 140/140 TradingView reference parity — no scored field changed
+- B→A spot-check 6/6 expected names
+- Frozen-membership behavior: 2nd same-day build kept identical members, did
+  not duplicate the history row, flipped is_refresh_today→False
+- All scored values (CCQS/components/state/tier/setup) bit-identical pre/post
+  (display-only addition)
+
 ## Phase 30.1–30.4 — Aggregation + display-layer follow-ups (2026-05-29)
 
 Four sub-phases shipped after Phase 30 reorganized the universe. Each

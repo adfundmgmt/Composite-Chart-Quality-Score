@@ -26,6 +26,7 @@ from app.utils.data_loader import (
     get_newly_broken_today,
     load_components_for_ticker,
     load_dashboard_data,
+    load_focus25,
     load_grade_thresholds_history,
     load_key_metrics_for_ticker,
     load_oos_metrics,
@@ -213,6 +214,69 @@ with tab_production:
         use_container_width=True,
         config={"displayModeBar": False},
     )
+
+    # -----------------------------------------------------------------------
+    # Section 1.5 — Focus 25 (Phase 32; display-layer model watchlist)
+    # -----------------------------------------------------------------------
+    st.markdown("<hr class='section-rule'/>", unsafe_allow_html=True)
+    st.markdown("## Focus 25")
+    f25, f25_meta = load_focus25()
+    if f25.empty:
+        st.info("Focus 25 watchlist not yet built — runs with the next pipeline refresh.")
+    else:
+        # refresh / freeze status line
+        est = " (est.)" if f25_meta.get("next_refresh_estimated") else ""
+        st.markdown(
+            f"<div class='meta'>Last refresh <b>{f25_meta.get('refresh_date','?')}</b> · "
+            f"next refresh <b>{f25_meta.get('next_refresh_date','?')}{est}</b> · "
+            f"as-of <b>{f25_meta.get('as_of_date','?')}</b> · "
+            f"model weight <b>{f25_meta.get('model_weight_pct',4.0)}% each</b> "
+            f"(equal-weight reference) · membership frozen between refreshes.</div>",
+            unsafe_allow_html=True,
+        )
+
+        # basket concentration block
+        conc = f25_meta.get("concentration", {})
+        conc_str = " · ".join(f"{b}: {n}" for b, n in sorted(conc.items(), key=lambda x: -x[1]))
+        st.markdown(f"<div class='meta'><b>Basket concentration</b> — {conc_str}</div>", unsafe_allow_html=True)
+        if f25_meta.get("amber_concentration"):
+            st.warning(
+                f"Concentration: top-25 is effectively {f25_meta.get('max_basket_n')} names of "
+                f"one theme ({f25_meta.get('max_basket')}) — discretionary diversification is the user's layer."
+            )
+
+        # adds / drops on a refresh
+        if f25_meta.get("is_refresh_today") and (f25_meta.get("adds") or f25_meta.get("drops")):
+            adds = ", ".join(f25_meta.get("adds", [])) or "—"
+            drops = ", ".join(f"{d['ticker']} ({d['reason']})" for d in f25_meta.get("drops", [])) or "—"
+            st.markdown(
+                f"<div class='meta'><b>This refresh</b> — Adds: {adds} · Drops: {drops}</div>",
+                unsafe_allow_html=True,
+            )
+
+        # per-name table (translate internal labels at the render boundary)
+        disp = f25.copy()
+        disp["Tier"] = disp["leadership_tier"].map(display_tier)
+        disp["State"] = disp["primary_state"].map(display_state)
+        disp["B→A"] = disp["ba_flag"].map(lambda b: "● B→A" if b else "")
+        disp["CCQS"] = disp["ccqs"].round(1)
+        disp["% from 52w hi"] = disp["pct_from_52w_high"].round(1)
+        disp["ADR%"] = disp["adr_pct_20"].round(2)
+        disp = disp.rename(columns={"rank": "Rank", "ticker": "Ticker",
+                                    "grade": "Grade", "setup": "Setup", "basket": "Basket"})
+        st.dataframe(
+            disp[["Rank", "Ticker", "CCQS", "Grade", "Tier", "State", "Setup",
+                  "B→A", "Basket", "% from 52w hi", "ADR%"]],
+            use_container_width=True, hide_index=True,
+        )
+        st.caption(
+            "Focus 25 implements the Phase 31 validated configuration (top-25 / 4-week / "
+            "equal-weight). Out-of-sample it beat SPY and the full universe but did not clear "
+            "luck-adjusted significance; use as a discretionary watchlist, not an autopilot "
+            "strategy. Validated horizons: 4-week to 126-day. Not for sub-2-week trading. "
+            "B→A is a Phase 28/29 annotation (recent grade emergence), never a selection filter. "
+            "Sizing, entries, and stops are the user's discretionary layer."
+        )
 
     # -----------------------------------------------------------------------
     # Section 2 — Themes

@@ -297,6 +297,17 @@ def main() -> None:
     print(f"  wrote regime_context.json  ({n_dv} tickers w/ dvol quintile, "
           f"market vol regime = {mv.get('current_regime', '?')})")
 
+    # Phase 32 — Focus 25 watchlist (display-layer only; consumes the slim
+    # cache written above). Frozen-membership top-25 by CCQS, 4-week cadence.
+    try:
+        from compute.focus25 import build_focus25
+        fm = build_focus25()
+        print(f"  wrote focus25_current.parquet  ({fm['n_members']} names, "
+              f"refresh {fm['refresh_date']}, {len(fm['ba_flagged'])} B→A-flagged, "
+              f"amber={fm['amber_concentration']})")
+    except Exception as e:  # never let the watchlist break the cache commit
+        print(f"  WARN: focus25 build skipped ({e})")
+
     total = sum(f.stat().st_size for f in DST.glob("*"))
     print(f"\nTotal dashboard cache: {total / 1024 / 1024:.2f} MB")
 
