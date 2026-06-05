@@ -119,7 +119,11 @@ def test_regime_context_current():
     assert "dvol_quintile_by_ticker" in ctx, "regime_context missing dvol_quintile_by_ticker"
     assert "market_vol" in ctx, "regime_context missing market_vol"
     assert "current_regime" in ctx["market_vol"], "market_vol missing current_regime"
-    assert ctx["market_vol"]["current_regime"] in ("LOW", "MED", "HIGH"), (
+    # Builder emits LOW / MID / HIGH (see compute/build_dashboard_cache.py
+    # _market_vol_thresholds). The middle tercile is "MID", not "MED" — this
+    # test previously allowed only "MED", a latent typo exposed on 2026-06-05
+    # when the vol regime first landed in the middle tercile in production.
+    assert ctx["market_vol"]["current_regime"] in ("LOW", "MID", "HIGH"), (
         f"Invalid market_vol regime: {ctx['market_vol']['current_regime']}"
     )
 
