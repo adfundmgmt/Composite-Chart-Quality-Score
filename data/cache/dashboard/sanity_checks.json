@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-05T21:02:07.306313+00:00",
+  "generated_at": "2026-06-08T20:24:21.019679+00:00",
   "passed": true,
   "n_checks": 11,
   "n_failed": 0,
@@ -57,11 +57,11 @@
       "name": "index_alignment",
       "passed": true,
       "observed": {
-        "ccqs": 1548000,
-        "components": 1548000,
-        "state": 1548000,
-        "leadership": 1548000,
-        "setups": 1548000
+        "ccqs": 1546280,
+        "components": 1546280,
+        "state": 1546280,
+        "leadership": 1546280,
+        "setups": 1546280
       },
       "expected": "all (ticker,date) indexes equal length and named",
       "detail": ""
@@ -69,21 +69,21 @@
     {
       "name": "theme_ccqs_coverage",
       "passed": true,
-      "observed": "82.59% valid",
+      "observed": "82.57% valid",
       "expected": "\u226550% of theme rows have a valid theme_ccqs",
       "detail": ""
     },
     {
       "name": "features_fresh_within_5d",
       "passed": true,
-      "observed": "max date 2026-06-05 (0d old)",
+      "observed": "max date 2026-06-08 (0d old)",
       "expected": "latest features date within 5 calendar days",
       "detail": ""
     },
     {
       "name": "universe_coverage",
       "passed": true,
-      "observed": "859 tickers",
+      "observed": "860 tickers",
       "expected": "\u2265750 unique tickers with a CCQS in the last 30 trading days",
       "detail": ""
     }
