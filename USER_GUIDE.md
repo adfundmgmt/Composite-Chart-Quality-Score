@@ -1,6 +1,6 @@
 # CCQS V1 — User Guide
 
-**How to interpret the output.** Last updated 2026-05-26 (Path C complete, methodology baseline Phase 11E.2).
+**How to interpret the output.** Last updated 2026-06-12. Methodology baseline **Phase 11E.2** (locked); the display/tooling layer is current through **Phase 32R**.
 
 This guide complements `SPEC.md`. SPEC is the authoritative methodology document; this guide is the user-facing interpretation manual.
 
@@ -156,12 +156,14 @@ cascade for slow, in-the-middle names.
 - *Predictive language* ("Failed Setup", "Reversal Pending"). Labels
   describe present state only.
 
-**Coverage snapshot (2026-05-28, universe = 860).** Blank 50.6% /
-Sideways 10.3% / Shallow Pullback 8.3% / Basing Low 6.9% / Extended
-5.6% / Tight Base 5.5% / Breakdown 4.3% / Failed Breakout 2.3% /
-Breakout 2.2% / Coiling 2.0% / Deep Pullback 1.4% / At Highs 0.6% /
-New High 0.1%. Blank is the attention-saving residual by design — most
-names on most days don't sit at a label-worthy chart event.
+**Coverage snapshot (2026-06-11, universe = 860).** Blank 40.1% /
+Reclaim 11.6% / Basing Low 8.5% / Sideways 7.9% / Extended 6.5% /
+Breakout 5.5% / Tight Base 5.2% / Shallow Pullback 4.3% / Breakdown
+3.0% / Failed Breakout 2.0% / Deep Pullback 1.7% / Coiling 1.5% /
+New High 1.0% / At Highs 1.0%. Blank is the attention-saving residual
+by design — most names on most days don't sit at a label-worthy chart
+event. (The distribution shifts with the tape — e.g. Reclaim spikes
+after a broad bounce off lows, as on this date.)
 
 **Confidence column.** `setup_confidence = 1.0` for any assigned label,
 `0.0` for blank. Preserved as a column for downstream compatibility;

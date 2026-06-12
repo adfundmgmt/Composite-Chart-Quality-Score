@@ -1,5 +1,7 @@
 # CCQS V1 — Composite Chart Quality Score Specification
 
+> **Currency note (2026-06-12):** The CCQS methodology baseline remains **Phase 11E.2** and is **unchanged through Phase 32R**. Every phase since Path C (13 → 32R) has touched only the universe (e.g. Phase 30 basket changes), the display layer (Phase 26/27 labels and chips), or private tooling — never the scoring methodology, component weights, grade thresholds, or TradingView parity. This specification is current as of today; see `CHANGELOG.md` for the phase-by-phase audit trail.
+
 **Version:** 1.0 (Locked) — **PATH C COMPLETE (Phase 12, 2026-05-26)**
 **+ Phase 14R reversion (2026-05-26)** restoring CCQS to bit-identical
 Path C state after Phase 14.1 (universe expansion experiment, see

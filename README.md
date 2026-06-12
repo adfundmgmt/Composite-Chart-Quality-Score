@@ -147,6 +147,12 @@ System is **fully deployed and live in production**. Phase numbering reflects it
 | 28 | s_demand permanently removed + 0-weight rows hidden | ✅ |
 | 29 | 30 unused features dropped + Methodology section trim | ✅ |
 | 30 | "Magnificent Seven" CORE basket added; AAPL moved out of Hyperscalers | ✅ |
+| 30.1–30.4 | Aggregation source fix + Themes / Basket-Peers display follow-ups | ✅ |
+| 31 | Top-N watchlist configuration validated (equal-weight beat score-weighting & inverse-vol) — research only, **no methodology change** | ✅ |
+| 32 | Internal watchlist prototyped on the dashboard (display-layer only) | ↩︎ Reverted by 32R |
+| 32R | Watchlist reverted to **private local-only tooling**; no public dashboard surface. Methodology bit-identical throughout | ✅ |
+
+> **Methodology is locked at the Phase 11E.2 baseline and unchanged through Phase 32R** — every phase since has touched only the universe, display layer, or private tooling, never the scoring. See `CHANGELOG.md` for the full audit trail and `SPEC.md` for the methodology.
 
 ---
 
