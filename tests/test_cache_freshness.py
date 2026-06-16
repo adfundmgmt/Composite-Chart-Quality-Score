@@ -137,6 +137,6 @@ def test_sanity_checks_all_pass():
     n_failed = report.get("n_failed", 0)
     all_passed = report.get("passed", False)
     failed_names = [c["name"] for c in report.get("checks", []) if not c.get("passed", False)]
-    assert n_checks == 11, f"Expected 11 sanity checks, found {n_checks}"
+    assert n_checks == 12, f"Expected 12 sanity checks, found {n_checks}"
     assert n_failed == 0, f"{n_failed} sanity checks failed: {failed_names}"
     assert all_passed, f"Sanity checks flag passed=False; failed: {failed_names}"

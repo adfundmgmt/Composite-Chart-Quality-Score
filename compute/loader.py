@@ -318,6 +318,61 @@ def fetch_all(
     return long_df, all_failed, self_heal
 
 
+def merge_with_last_good(
+    fresh_long: pd.DataFrame, failed: dict[str, str]
+) -> tuple[pd.DataFrame, dict[str, str]]:
+    """Splice the fresh fetch over the committed last-good OHLCV.
+
+    CI shares an IP that Yahoo rate-limits, intermittently returning truncated
+    (~30-bar) or failed responses for ~70 names/run — and individual re-fetches
+    get throttled too, so self-heal alone can't recover them (root cause of the
+    2026-06-15 coverage collapse). The committed `ohlcv_daily.parquet` is a
+    last-good floor (full 7y history): for any ticker whose fresh fetch is
+    truncated (< SUSPICIOUS_MIN_BARS bars) or missing, we keep the cached
+    history and append only its genuinely-new fresh bars (the truncated frame
+    still carries the recent tail). Names with a healthy fresh fetch use it
+    as-is. Returns (merged_long, recovered: ticker -> note).
+    """
+    if not OHLCV_PATH.exists():
+        return fresh_long, {}
+    try:
+        cached = pd.read_parquet(OHLCV_PATH)
+    except Exception as exc:  # noqa: BLE001
+        logger.warning(f"Last-good merge: could not read cache ({exc}); using fresh only")
+        return fresh_long, {}
+    if cached.empty or "ticker" not in cached.columns:
+        return fresh_long, {}
+
+    cached["date"] = pd.to_datetime(cached["date"])
+    fresh = fresh_long.copy()
+    if not fresh.empty:
+        fresh["date"] = pd.to_datetime(fresh["date"])
+
+    fcount = fresh.groupby("ticker")["date"].count() if not fresh.empty else pd.Series(dtype=int)
+    ccount = cached.groupby("ticker")["date"].count()
+
+    pieces: list[pd.DataFrame] = []
+    recovered: dict[str, str] = {}
+    for t in sorted(set(fcount.index) | set(ccount.index)):
+        fb, cb = int(fcount.get(t, 0)), int(ccount.get(t, 0))
+        ft = fresh[fresh["ticker"] == t] if fb else None
+        ct = cached[cached["ticker"] == t] if cb else None
+        if fb >= SUSPICIOUS_MIN_BARS or cb == 0:
+            pieces.append(ft if ft is not None else ct)          # healthy fresh, or nothing to fall back on
+        else:
+            merged_t = ct                                        # truncated/failed: keep cached history...
+            if ft is not None and not ft.empty:
+                tail = ft[ft["date"] > ct["date"].max()]         # ...append only genuinely-new fresh bars
+                if not tail.empty:
+                    merged_t = pd.concat([ct, tail], ignore_index=True)
+            pieces.append(merged_t)
+            recovered[t] = f"last_good_merge(fresh={fb},cached={cb})"
+
+    merged = pd.concat([p for p in pieces if p is not None], ignore_index=True)
+    merged = merged.sort_values(["ticker", "date"]).reset_index(drop=True)
+    return merged, recovered
+
+
 def write_outputs(
     long_df: pd.DataFrame,
     failed: dict[str, str],
@@ -393,6 +448,18 @@ def main(force: bool = False) -> int:
     if long_df.empty and OHLCV_PATH.exists():
         logger.error("Pull returned no data; keeping last-good cache.")
         return 1
+
+    # Splice fresh over committed last-good so CI rate-limit truncation never
+    # drops a name's history (read BEFORE write_outputs overwrites the cache).
+    long_df, recovered = merge_with_last_good(long_df, failed)
+    if recovered:
+        for t in recovered:
+            failed.pop(t, None)  # spliced names are no longer missing for coverage
+        self_heal["n_last_good_merged"] = len(recovered)
+        logger.warning(
+            f"Last-good merge: spliced cached history for {len(recovered)} "
+            f"truncated/failed ticker(s) — e.g. {sorted(recovered)[:10]}"
+        )
 
     write_outputs(
         long_df=long_df,

@@ -1,7 +1,7 @@
 {
-  "generated_at": "2026-06-16T20:26:17.143233+00:00",
+  "generated_at": "2026-06-16T22:46:37.015850+00:00",
   "passed": true,
-  "n_checks": 11,
+  "n_checks": 12,
   "n_failed": 0,
   "checks": [
     {
@@ -35,7 +35,7 @@
     {
       "name": "grade_s_pct_in_2_15",
       "passed": true,
-      "observed": "6.61%",
+      "observed": "6.62%",
       "expected": "S grade % between 2 and 15",
       "detail": ""
     },
@@ -83,8 +83,15 @@
     {
       "name": "universe_coverage",
       "passed": true,
-      "observed": "859 tickers",
+      "observed": "860 tickers",
       "expected": "\u2265750 unique tickers with a CCQS in the last 30 trading days",
+      "detail": ""
+    },
+    {
+      "name": "latest_day_coverage",
+      "passed": true,
+      "observed": "858 scored on 2026-06-16 (+0.1% vs prior 859)",
+      "expected": "\u2265820 tickers scored on latest date AND \u22644% day-over-day drop",
       "detail": ""
     }
   ]
