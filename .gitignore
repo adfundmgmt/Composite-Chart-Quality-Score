@@ -44,9 +44,12 @@ venv.bak/
 .DS_Store
 
 # Project data — gitignored EXCEPT the slim dashboard cache that ships with
-# the deployed Streamlit app (see compute/build_dashboard_cache.py).
+# the deployed Streamlit app (see compute/build_dashboard_cache.py) and the
+# last-good OHLCV seed (cold-start floor for the loader's rate-limit-resilient
+# merge; carried forward day-to-day via actions/cache — see pipeline.yml).
 data/cache/*
 !data/cache/dashboard/
+!data/cache/ohlcv_daily.parquet
 data/snapshots/
 logs/
 

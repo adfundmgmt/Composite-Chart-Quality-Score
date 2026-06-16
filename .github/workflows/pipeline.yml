@@ -111,6 +111,21 @@ jobs:
       #                              (PASS / WARNING / FAIL gates)
       #   3. compute.features      → consumes both above, writes
       #                              data/cache/features.parquet
+      #
+      # Last-good OHLCV carry-forward. Yahoo rate-limits the shared CI IP and
+      # intermittently truncates ~70 names/run; the loader splices the fresh
+      # fetch over this cache so coverage never collapses (see
+      # compute/loader.merge_with_last_good). Unique key → always saves the
+      # merged result; restore-keys → restores the most recent. The committed
+      # data/cache/ohlcv_daily.parquet is the cold-start floor on a cache miss.
+      - name: Restore last-good OHLCV
+        uses: actions/cache@v4
+        with:
+          path: data/cache/ohlcv_daily.parquet
+          key: ohlcv-lastgood-${{ github.run_id }}
+          restore-keys: |
+            ohlcv-lastgood-
+
       - name: Fetch OHLCV from yfinance
         run: python -m compute.loader
 

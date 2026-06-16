@@ -82,7 +82,7 @@ def setups():
 # --------------------------------------------------------------------------
 
 def test_11_sanity_checks_pass():
-    """All 11 sanity checks documented in compute/aggregation.py must pass."""
+    """All 12 sanity checks must pass (11 original + #12 latest_day_coverage)."""
     if not SANITY_CHECKS_PATH.exists():
         pytest.skip(f"Sanity checks not present at {SANITY_CHECKS_PATH}")
     report = json.loads(SANITY_CHECKS_PATH.read_text())
@@ -90,7 +90,7 @@ def test_11_sanity_checks_pass():
     n_failed = report.get("n_failed", 0)
     all_passed = report.get("passed", False)
     failed_names = [c["name"] for c in report.get("checks", []) if not c.get("passed", False)]
-    assert n_checks == 11, f"Expected 11 sanity checks, found {n_checks}"
+    assert n_checks == 12, f"Expected 12 sanity checks, found {n_checks}"
     assert n_failed == 0, f"{n_failed} sanity checks failed: {failed_names}"
     assert all_passed, f"Sanity checks report flags passed=False; failed: {failed_names}"
 
