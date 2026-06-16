@@ -89,3 +89,7 @@ data/cache/focus25_*
 
 # Research records (Phase 30R/31/33 reports, pre-registrations, data) — local only
 research_records/
+
+# private single-name short screen (not for public Streamlit/GitHub)
+scripts/short_screen.py
+data/cache/short_screen_latest.json
