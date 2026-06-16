@@ -209,6 +209,30 @@ def run_sanity_checks() -> dict:
         )
     )
 
+    # 12. Latest-day coverage — the MOST RECENT date must have ≥ 820 tickers
+    #     with a non-NaN CCQS, AND must not drop > 4% vs the prior trading day.
+    #     Check #11's 30-day window counts a ticker as covered if it scored on
+    #     ANY of the last 30 days, so a sudden single-day collapse (e.g. a batch
+    #     of truncated yfinance frames lacking 50/200d history) stays invisible
+    #     to it. This same-day check catches that regression (2026-06-15: a clean
+    #     858 → 790 single-day drop sailed through the green #11 gate).
+    all_dates = sorted(ccqs.index.get_level_values("date").unique())
+    d_last = all_dates[-1]
+    cur_cov = int(ccqs.xs(d_last, level="date")["ccqs"].notna().sum())
+    if len(all_dates) >= 2:
+        prev_cov = int(ccqs.xs(all_dates[-2], level="date")["ccqs"].notna().sum())
+        drop_pct = (prev_cov - cur_cov) / prev_cov * 100.0 if prev_cov else 0.0
+    else:
+        prev_cov, drop_pct = cur_cov, 0.0
+    checks.append(
+        _check(
+            cur_cov >= 820 and drop_pct <= 4.0,
+            "latest_day_coverage",
+            f"{cur_cov} scored on {d_last.date()} ({drop_pct:+.1f}% vs prior {prev_cov})",
+            "≥820 tickers scored on latest date AND ≤4% day-over-day drop",
+        )
+    )
+
     all_passed = all(c["passed"] for c in checks)
     return {
         "generated_at": datetime.now(timezone.utc).isoformat(),

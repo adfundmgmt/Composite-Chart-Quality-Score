@@ -55,6 +55,16 @@ BATCH_SIZE = 100
 MAX_RETRIES = 3
 RETRY_BACKOFF_SECONDS = 5
 
+# Self-heal: a frame with fewer than this many bars cannot produce the 200d MA
+# (or 50d/60d-vol features) and would silently drop from CCQS scoring. yfinance
+# intermittently returns such truncated frames for a subset of a batch — they
+# pass the lenient per-ticker validation but lack history. We re-fetch each one
+# individually (there is no persisted last-good OHLCV on CI to fall back on) and
+# keep whichever attempt has the most bars. Genuine recent IPOs simply re-confirm
+# their true short history. Root cause of the 2026-06-15 coverage regression.
+SUSPICIOUS_MIN_BARS = 210  # just above the 200d-MA requirement
+REFETCH_MAX_ATTEMPTS = 2
+
 TTL_MARKET_HOURS = timedelta(hours=3)
 TTL_AFTER_CLOSE = timedelta(hours=18)
 
@@ -214,7 +224,7 @@ def fetch_batch_with_retry(
 
 def fetch_all(
     tickers: list[str], lookback_days: int = LOOKBACK_DAYS
-) -> tuple[pd.DataFrame, dict[str, str]]:
+) -> tuple[pd.DataFrame, dict[str, str], dict[str, Any]]:
     """
     Fetch all tickers in batches.
 
@@ -225,6 +235,8 @@ def fetch_all(
         adj_close, volume. Sorted by (ticker, date).
     failed : dict[str, str]
         ticker -> reason for failure.
+    self_heal : dict
+        {n_suspicious, n_healed, still_short} — truncated-fetch recovery stats.
     """
     end_dt = datetime.now(timezone.utc).date() + timedelta(days=1)
     start_dt = end_dt - timedelta(days=lookback_days)
@@ -252,6 +264,39 @@ def fetch_all(
             f"(running total: {len(all_frames)} ok, {len(all_failed)} failed)"
         )
 
+    # ---- Self-heal: re-fetch suspiciously-short (truncated) frames ---------
+    # A frame that passed validation but carries < SUSPICIOUS_MIN_BARS bars
+    # cannot produce 50/200d features and would silently drop from CCQS. Re-
+    # fetch each individually and keep the fullest result. (See constant note.)
+    def _bars(frame: pd.DataFrame | None) -> int:
+        return 0 if frame is None else int(frame["close"].dropna().shape[0])
+
+    suspicious = [t for t, f in all_frames.items() if _bars(f) < SUSPICIOUS_MIN_BARS]
+    n_healed = 0
+    if suspicious:
+        logger.warning(
+            f"Self-heal: {len(suspicious)} ticker(s) returned <{SUSPICIOUS_MIN_BARS} "
+            f"bars; re-fetching individually to rule out truncation"
+        )
+        for t in suspicious:
+            best, best_bars = all_frames.get(t), _bars(all_frames.get(t))
+            for _ in range(REFETCH_MAX_ATTEMPTS):
+                ok, _f = fetch_batch_with_retry([t], start, end)
+                cand = ok.get(t)
+                if _bars(cand) > best_bars:
+                    best, best_bars = cand, _bars(cand)
+                if best_bars >= SUSPICIOUS_MIN_BARS:
+                    break
+            if best is not None and best_bars > _bars(all_frames.get(t)):
+                all_frames[t] = best
+                n_healed += 1
+        logger.info(
+            f"Self-heal: recovered fuller history for {n_healed}/{len(suspicious)} "
+            f"ticker(s); still-short are genuine recent IPOs"
+        )
+    still_short = sorted(t for t in suspicious if _bars(all_frames.get(t)) < SUSPICIOUS_MIN_BARS)
+    self_heal = {"n_suspicious": len(suspicious), "n_healed": n_healed, "still_short": still_short}
+
     # Convert per-ticker frames to long format
     pieces: list[pd.DataFrame] = []
     for ticker, frame in all_frames.items():
@@ -270,7 +315,7 @@ def fetch_all(
             columns=["ticker", "date", *REQUIRED_COLUMNS]
         )
 
-    return long_df, all_failed
+    return long_df, all_failed, self_heal
 
 
 def write_outputs(
@@ -278,6 +323,7 @@ def write_outputs(
     failed: dict[str, str],
     universe_size: int,
     benchmark_count: int,
+    self_heal: dict[str, Any] | None = None,
 ) -> None:
     CACHE_DIR.mkdir(parents=True, exist_ok=True)
 
@@ -295,6 +341,7 @@ def write_outputs(
         "benchmark_count": benchmark_count,
         "n_loaded": int(long_df["ticker"].nunique()) if not long_df.empty else 0,
         "n_failed": len(failed),
+        "self_heal": self_heal or {"n_suspicious": 0, "n_healed": 0, "still_short": []},
         "date_min": date_min,
         "date_max": date_max,
         "rows": int(len(long_df)),
@@ -334,7 +381,7 @@ def main(force: bool = False) -> int:
     )
 
     t0 = time.time()
-    long_df, failed = fetch_all(full)
+    long_df, failed, self_heal = fetch_all(full)
     elapsed = time.time() - t0
 
     n_loaded = int(long_df["ticker"].nunique()) if not long_df.empty else 0
@@ -352,7 +399,14 @@ def main(force: bool = False) -> int:
         failed=failed,
         universe_size=len(universe),
         benchmark_count=len(BENCHMARKS),
+        self_heal=self_heal,
     )
+    if self_heal["n_suspicious"]:
+        logger.info(
+            f"Self-heal summary: {self_heal['n_healed']}/{self_heal['n_suspicious']} "
+            f"recovered; {len(self_heal['still_short'])} genuinely short "
+            f"(recent IPOs): {self_heal['still_short'][:10]}"
+        )
 
     # Console summary
     print()

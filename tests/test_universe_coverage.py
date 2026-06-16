@@ -25,6 +25,7 @@ import pytest
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 CACHE_DIR = PROJECT_ROOT / "data" / "cache"
 OHLCV_PATH = CACHE_DIR / "ohlcv_daily.parquet"
+CCQS_PATH = CACHE_DIR / "ccqs.parquet"
 FAILED_TICKERS_PATH = CACHE_DIR / "failed_tickers.json"
 DATA_QUALITY_PATH = CACHE_DIR / "data_quality_report.json"
 
@@ -34,6 +35,8 @@ DATA_QUALITY_PATH = CACHE_DIR / "data_quality_report.json"
 MAX_UNRECOVERED_FAILURE_RATE = 0.05   # 5% of universe (~44 tickers)
 MIN_PASS_OR_WARNING_RATE = 0.90        # 90% must be PASS or WARNING
 MAX_DAYS_STALE = 7                     # tolerate up to 7 calendar days (weekends + holidays)
+MIN_SCORED_LATEST_DAY = 820            # min tickers with a CCQS on the latest date
+MAX_COVERAGE_DROP_PCT = 4.0            # max acceptable day-over-day scored-count drop
 
 
 @pytest.fixture(scope="module")
@@ -52,6 +55,15 @@ def ohlcv_cache():
     if not OHLCV_PATH.exists():
         pytest.skip(f"OHLCV cache not present at {OHLCV_PATH}")
     return pd.read_parquet(OHLCV_PATH)
+
+
+@pytest.fixture(scope="module")
+def ccqs_cache():
+    """Load the CCQS panel (pipeline output). Skip if absent so devs can run
+    coverage tests without a full local rebuild."""
+    if not CCQS_PATH.exists():
+        pytest.skip(f"CCQS cache not present at {CCQS_PATH}")
+    return pd.read_parquet(CCQS_PATH)
 
 
 @pytest.fixture(scope="module")
@@ -123,6 +135,43 @@ def test_no_critical_silent_failures(ohlcv_cache, universe, failed_tickers):
         f"{len(silent_missing)} silent failures — these tickers are "
         f"declared in the universe but not in OHLCV cache OR failed_tickers.json: "
         f"{sorted(silent_missing)[:20]}"
+    )
+
+
+# --------------------------------------------------------------------------
+# Scored-coverage tests — presence in OHLCV is NOT enough. A truncated frame
+# (too few bars for 50/200d features) IS present in the cache but silently
+# fails to produce a CCQS. These assert *sufficiency*, on the latest date, and
+# block the commit on a single-day collapse (the 2026-06-15 regression).
+# --------------------------------------------------------------------------
+
+def test_latest_day_scored_coverage(ccqs_cache):
+    """The most recent date must have ≥ MIN_SCORED_LATEST_DAY tickers with a
+    non-NaN CCQS. Catches batches of truncated frames that are present in OHLCV
+    but lack the history to be scored."""
+    dates = sorted(ccqs_cache.index.get_level_values("date").unique())
+    d_last = dates[-1]
+    scored = int(ccqs_cache.xs(d_last, level="date")["ccqs"].notna().sum())
+    assert scored >= MIN_SCORED_LATEST_DAY, (
+        f"Only {scored} tickers scored on latest date {d_last.date()} "
+        f"(threshold {MIN_SCORED_LATEST_DAY}). A truncated-fetch batch likely "
+        f"dropped names from CCQS — check loader self-heal / ohlcv_meta self_heal stats."
+    )
+
+
+def test_scored_coverage_no_daily_collapse(ccqs_cache):
+    """Scored-ticker count must not fall > MAX_COVERAGE_DROP_PCT day-over-day.
+    This is the gate that the 30-day-window check #11 in sanity_checks misses."""
+    dates = sorted(ccqs_cache.index.get_level_values("date").unique())
+    if len(dates) < 2:
+        pytest.skip("need ≥2 dates")
+    cur = int(ccqs_cache.xs(dates[-1], level="date")["ccqs"].notna().sum())
+    prev = int(ccqs_cache.xs(dates[-2], level="date")["ccqs"].notna().sum())
+    drop_pct = (prev - cur) / prev * 100.0 if prev else 0.0
+    assert drop_pct <= MAX_COVERAGE_DROP_PCT, (
+        f"Scored coverage collapsed {drop_pct:.1f}% in one day "
+        f"({prev} on {dates[-2].date()} → {cur} on {dates[-1].date()}; "
+        f"threshold {MAX_COVERAGE_DROP_PCT}%). Likely a truncated-fetch regression."
     )
 
 
