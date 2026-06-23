@@ -1,0 +1,98 @@
+name: Deploy Web Terminal
+
+# Publishes the build-less web/ terminal (web/index.html + styles.css + app.js)
+# to GitHub Pages.
+#
+# KEY DESIGN: this reads the SAME committed slim dashboard cache the Streamlit
+# app reads (data/cache/dashboard/*.parquet|json) via web/export_data.py, so it
+# NEVER re-runs the heavy data pipeline. It just regenerates web/data/*.json
+# from that committed cache and ships the static web/ directory. That keeps the
+# proven daily data pipeline (pipeline.yml) completely untouched — this workflow
+# only ever reads from main, never writes to it.
+#
+# Fires on:
+#   1. workflow_run — after "Daily CCQS Pipeline" completes. We use workflow_run
+#      (not a push trigger on data/cache/dashboard/**) because the pipeline's
+#      cache commit is made by GITHUB_TOKEN, and by design GITHUB_TOKEN pushes
+#      do NOT trigger downstream `push` workflows. workflow_run is the supported
+#      way to chain after it. We checkout ref: main so we pick up the fresh
+#      cache the pipeline just committed.
+#   2. push to main touching web/** — UI / front-end code changes (these are
+#      human pushes, so they trigger normally).
+#   3. workflow_dispatch — manual redeploy button in the Actions tab.
+on:
+  workflow_run:
+    workflows: ["Daily CCQS Pipeline"]
+    types: [completed]
+  push:
+    branches: [main]
+    paths:
+      - 'web/**'
+      - '.github/workflows/deploy-web.yml'
+  workflow_dispatch: {}
+
+# GitHub Pages deploy needs id-token (OIDC) + pages:write; contents:read to
+# checkout. These are scoped to THIS workflow only and grant no write access to
+# the repo contents, so they can't affect the data pipeline.
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Never run two web deploys at once; a newer one supersedes an in-flight one.
+concurrency:
+  group: deploy-web
+  cancel-in-progress: true
+
+jobs:
+  build-deploy:
+    # For workflow_run, only deploy if the pipeline actually succeeded — don't
+    # publish a site off a failed/half-written cache. push + dispatch always run.
+    if: ${{ github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Checkout latest main (has the fresh slim cache + web/ source)
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Set up Python 3.13
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+          cache: pip
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      # Reads data/cache/dashboard/ (committed) via app.utils.data_loader and
+      # writes web/data/{core,detail}.json + web/data/history/<TICKER>.json.
+      # web/data/ is gitignored — it only exists here, freshly built, and gets
+      # bundled into the Pages artifact below.
+      - name: Export static JSON feed from the committed dashboard cache
+        run: python web/export_data.py
+
+      # enablement: true asks GitHub to turn Pages on (build_type=workflow) if it
+      # isn't already — so the very first run self-provisions Pages. If your repo
+      # plan/org policy blocks that, this step errors with a clear message and you
+      # enable Pages once by hand (Settings -> Pages -> Source: GitHub Actions);
+      # see DEPLOY.md.
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+        with:
+          enablement: true
+
+      - name: Upload web/ as the Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: web
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

@@ -53,6 +53,12 @@ data/cache/*
 data/snapshots/
 logs/
 
+# Web terminal's generated JSON feed — regenerated in CI by web/export_data.py
+# from the committed slim dashboard cache, then published as the Pages artifact
+# (see .github/workflows/deploy-web.yml). Never committed: ~18 MB/day, mostly
+# per-ticker history that changes every run.
+web/data/
+
 # Migration backups (local-only — large pre-migration snapshots kept for rollback)
 .migration_backup_*/
 

@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; base-uri 'self'; form-action 'none'">
+<title>CCQS · Composite Chart Quality Score</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ag-grid-community@32.3.3/styles/ag-grid.css" integrity="sha384-gIsz6JTVbF5eW0CcuAljKL2kOE400G4TjBH3CBtGXjf8BkjmC5x9jp4Y+bYa7HKA" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ag-grid-community@32.3.3/styles/ag-theme-quartz.css" integrity="sha384-bH6bJyGdKmdCV+hlDWtv+dVLH5shFT5aKgGRKceh40t3vt171XksCejZ5ebqZVn0" crossorigin="anonymous">
+<link rel="stylesheet" href="styles.css?v=21">
+</head>
+<body>
+<div id="app">
+
+  <!-- ============ LEFT RAIL ============ -->
+  <aside class="rail">
+    <div class="brand">
+      <div class="brand-mark">◆</div>
+      <div class="brand-text">
+        <div class="brand-name">CCQS</div>
+        <div class="brand-sub">Chart Quality Score</div>
+      </div>
+    </div>
+    <nav class="nav">
+      <a role="button" tabindex="0" class="nav-item active" data-view="leaders" aria-current="page"><span class="ni-k">F1</span>Leaders</a>
+      <a role="button" tabindex="0" class="nav-item" data-view="themes"><span class="ni-k">F2</span>Themes</a>
+      <a role="button" tabindex="0" class="nav-item" data-view="movers"><span class="ni-k">F3</span>Movers</a>
+      <a role="button" tabindex="0" class="nav-item" data-view="health"><span class="ni-k">F4</span>System Health</a>
+    </nav>
+    <div class="rail-foot">
+      <button id="themeToggle" class="theme-toggle"><span class="tt-dot"></span><span class="tt-label">Dark</span></button>
+      <div class="rail-snap"><span class="snap-label">SNAPSHOT</span><span class="snap-date" id="snapDate">—</span></div>
+    </div>
+  </aside>
+
+  <!-- ============ MAIN ============ -->
+  <main class="main">
+
+    <!-- command line -->
+    <header class="cmdbar">
+      <span class="cmd-name">Composite Chart Quality Score</span>
+      <span class="cmd-prompt">CCQS&gt;</span>
+      <input id="cmdline" class="cmdline" type="text" autocomplete="off" spellcheck="false" aria-label="Filter tickers and themes"
+             placeholder="ticker, theme, or screen — e.g. NVDA · ccqs>=80 · rs>70   (⌘K to jump)">
+      <div class="cmd-meta" id="cmdMeta">—</div>
+    </header>
+
+    <!-- dense stat band (replaces KPI boxes) -->
+    <div class="statband" id="statband"></div>
+
+    <!-- ===== LEADERS VIEW (Mosaic: grid + linked inspector) ===== -->
+    <section class="view active" id="view-leaders">
+      <div class="workspace">
+        <div class="panel ws-grid">
+          <div class="panel-head">
+            <div class="ph-left"><span class="ph-kicker">F1</span><h2>Top Stocks</h2><span class="ph-count" id="leadersCount"></span></div>
+            <div class="ph-tools">
+              <div class="seg" id="gradeSeg"></div>
+              <select id="viewSel" class="view-sel" title="Saved views"><option value="">Views…</option></select>
+              <button class="tool-btn" id="saveViewBtn" title="Save current layout + filters as a view">＋ Save</button>
+              <button class="tool-btn" id="exportBtn" title="Export current view to CSV">⤓ CSV</button>
+            </div>
+          </div>
+          <div class="sector-legend" id="sectorLegend"></div>
+          <div class="chips" id="leaderChips"></div>
+          <div id="grid" class="ag-theme-quartz grid"></div>
+        </div>
+        <div class="splitter" id="splitter" role="separator" aria-orientation="vertical" tabindex="0" aria-label="Resize inspector" title="Drag to resize"></div>
+        <aside class="panel inspector" id="inspector" aria-label="Detail inspector">
+          <div class="insp-head">
+            <div class="ih-left"><span class="dh-ticker" id="dTicker">—</span><span class="dh-chips" id="dChips"></span></div>
+            <button class="cmp-add" id="cmpAdd" title="Add to compare basket">＋ COMPARE</button>
+          </div>
+          <div class="insp-body">
+            <div class="dh-row">
+              <div class="dh-score"><span class="ds-val" id="dScore">—</span><span class="ds-lab">CCQS</span></div>
+              <div class="dh-periods" id="dPeriods"></div>
+            </div>
+            <div class="chart-wrap"><div id="trajChart" class="traj"></div></div>
+            <div class="grade-legend" id="gradeLegend"></div>
+            <div class="drawer-grid">
+              <div class="dg-col"><div class="dg-title">Component Contributions</div><div id="dComponents" class="components"></div></div>
+              <div class="dg-col"><div class="dg-title">Key Metrics</div><div id="dMetrics" class="metrics"></div></div>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- ===== THEMES VIEW ===== -->
+    <section class="view" id="view-themes">
+      <div class="panel">
+        <div class="panel-head"><div class="ph-left"><span class="ph-kicker">F2</span><h2>Theme Heatmap</h2><span class="ph-sub">top 40 of 241 by breadth · color = CCQS · click a tile to filter · sort the table below for top by quality</span></div></div>
+        <div id="heatmap" class="heatmap-lg"></div>
+      </div>
+      <div class="panel">
+        <div class="panel-head">
+          <div class="ph-left"><span class="ph-kicker">F2</span><h2>Theme Table</h2><span class="ph-count" id="themesCount"></span></div>
+          <div class="ph-tools"><input id="themeSearch" class="grid-search" type="text" placeholder="filter themes…" aria-label="Filter themes"></div>
+        </div>
+        <div id="themesGrid" class="ag-theme-quartz grid-themes"></div>
+      </div>
+    </section>
+
+    <!-- ===== MOVERS VIEW ===== -->
+    <section class="view" id="view-movers">
+      <div class="panel">
+        <div class="panel-head"><div class="ph-left"><span class="ph-kicker">F3</span><h2>What Changed Today</h2></div></div>
+        <div class="movers">
+          <div class="mover-col"><div class="mc-head up">▲ Strongest Risers</div><div id="mvRisers" class="mc-body"></div></div>
+          <div class="mover-col"><div class="mc-head down">▼ Largest Decliners</div><div id="mvDecliners" class="mc-body"></div></div>
+          <div class="mover-col"><div class="mc-head neutral">◆ Grade Changes</div><div id="mvMoves" class="mc-body"></div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== HEALTH VIEW ===== -->
+    <section class="view" id="view-health">
+      <div class="panel">
+        <div class="panel-head"><div class="ph-left"><span class="ph-kicker">F4</span><h2>Out-of-Sample Information Coefficient</h2></div></div>
+        <div id="oos" class="oos"></div>
+        <div class="method" id="method"></div>
+      </div>
+    </section>
+
+    <footer class="foot" id="statusBar"></footer>
+  </main>
+
+
+  <!-- ============ COMPARE ============ -->
+  <div class="cmp-tray" id="cmpTray"></div>
+  <div class="cmp" id="cmp" aria-hidden="true">
+    <div class="cmp-scrim" id="cmpScrim"></div>
+    <div class="cmp-box" role="dialog" aria-modal="true" aria-labelledby="cmpTitle">
+      <div class="cmp-head"><span class="cmp-title" id="cmpTitle">◆ Compare Basket</span><button class="drawer-close" id="cmpClose" aria-label="Close compare">✕</button></div>
+      <div class="cmp-legend" id="cmpLegend"></div>
+      <div class="chart-wrap"><div id="cmpChart" class="cmp-chart"></div></div>
+      <div id="cmpTable" class="cmp-table"></div>
+    </div>
+  </div>
+
+  <!-- ============ COMMAND PALETTE ============ -->
+  <div class="cmdk" id="cmdk" aria-hidden="true">
+    <div class="cmdk-scrim" id="cmdkScrim"></div>
+    <div class="cmdk-box" role="dialog" aria-modal="true" aria-label="Jump to ticker">
+      <input id="cmdkInput" class="cmdk-input" type="text" placeholder="Jump to ticker…" autocomplete="off" aria-label="Ticker search">
+      <div id="cmdkList" class="cmdk-list"></div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <div id="loading" class="loading"><div class="spinner"></div><div>Loading CCQS terminal…</div></div>
+</div>
+
+<script defer src="https://cdn.jsdelivr.net/npm/ag-grid-community@32.3.3/dist/ag-grid-community.min.js" integrity="sha384-OEiOpwgvTUxOUC72SwfU8zDqZrWBwr0YNPNhovPbjCxdaTD0cLxMHBew/o8zuRln" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/lightweight-charts@4.2.1/dist/lightweight-charts.standalone.production.js" integrity="sha384-6pZys+XyCH0tACkmBDDBmI3cqbXjHWKKPtaZLx45PUShrKwmpQljmRsBkU58Ln1F" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/echarts@5.5.1/dist/echarts.min.js" integrity="sha384-Mx5lkUEQPM1pOJCwFtUICyX45KNojXbkWdYhkKUKsbv391mavbfoAmONbzkgYPzR" crossorigin="anonymous"></script>
+<script defer src="app.js?v=21"></script>
+</body>
+</html>
