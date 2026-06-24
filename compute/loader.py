@@ -327,11 +327,12 @@ def merge_with_last_good(
     (~30-bar) or failed responses for ~70 names/run — and individual re-fetches
     get throttled too, so self-heal alone can't recover them (root cause of the
     2026-06-15 coverage collapse). The committed `ohlcv_daily.parquet` is a
-    last-good floor (full 7y history): for any ticker whose fresh fetch is
-    truncated (< SUSPICIOUS_MIN_BARS bars) or missing, we keep the cached
-    history and append only its genuinely-new fresh bars (the truncated frame
-    still carries the recent tail). Names with a healthy fresh fetch use it
-    as-is. Returns (merged_long, recovered: ticker -> note).
+    last-good floor (full 7y history): for every ticker present in both we UNION
+    the cached and fresh histories — fresh wins on overlapping dates, cached fills
+    any gap, including a sparse RECENT window hidden inside an otherwise-long fresh
+    frame (which a total-bar-count test misses, and which nulls CCQS for thin ADRs
+    because the lookback features can't compute). New names use fresh; outright-
+    failed fetches keep cached. Returns (merged_long, recovered: ticker -> note).
     """
     if not OHLCV_PATH.exists():
         return fresh_long, {}
@@ -357,16 +358,22 @@ def merge_with_last_good(
         fb, cb = int(fcount.get(t, 0)), int(ccount.get(t, 0))
         ft = fresh[fresh["ticker"] == t] if fb else None
         ct = cached[cached["ticker"] == t] if cb else None
-        if fb >= SUSPICIOUS_MIN_BARS or cb == 0:
-            pieces.append(ft if ft is not None else ct)          # healthy fresh, or nothing to fall back on
+        if cb == 0:
+            pieces.append(ft)                                    # new name (e.g. recent IPO): no last-good floor
+        elif fb == 0:
+            pieces.append(ct)                                    # fresh fetch failed outright: keep cached history
         else:
-            merged_t = ct                                        # truncated/failed: keep cached history...
-            if ft is not None and not ft.empty:
-                tail = ft[ft["date"] > ct["date"].max()]         # ...append only genuinely-new fresh bars
-                if not tail.empty:
-                    merged_t = pd.concat([ct, tail], ignore_index=True)
+            # UNION the two histories: fresh wins on any overlapping date, cached
+            # fills EVERY gap. This catches what a pure bar-count test misses — a
+            # fresh frame with >= SUSPICIOUS_MIN_BARS *total* bars but a SPARSE
+            # RECENT window (a long tail + a lone stub bar). That frame used to be
+            # taken as-is, so 50/200d-MA and RS-252 couldn't compute and CCQS nulled
+            # out, silently dropping thin foreign ADRs (Nintendo, VW, Roche, …).
+            both = pd.concat([ct, ft], ignore_index=True)
+            merged_t = both.drop_duplicates(subset="date", keep="last").sort_values("date")
+            if len(merged_t) > fb:                               # cached actually supplied missing bars
+                recovered[t] = f"last_good_merge(fresh={fb},cached={cb},merged={len(merged_t)})"
             pieces.append(merged_t)
-            recovered[t] = f"last_good_merge(fresh={fb},cached={cb})"
 
     merged = pd.concat([p for p in pieces if p is not None], ignore_index=True)
     merged = merged.sort_values(["ticker", "date"]).reset_index(drop=True)
