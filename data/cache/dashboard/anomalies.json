@@ -1,6 +1,6 @@
 {
   "summary": {
-    "generated_at": "2026-06-24T22:31:19.474627+00:00",
+    "generated_at": "2026-06-24T23:08:24.839066+00:00",
     "n_ccqs_jumps": 158,
     "n_grade_jumps": 0,
     "n_state_flips": 6,
@@ -34,7 +34,7 @@
       "type": "ccqs_jump",
       "ccqs": 72.74,
       "ccqs_prev": 29.24,
-      "abs_jump": 43.5,
+      "abs_jump": 43.51,
       "roll_z": 3.05,
       "severity": "high"
     },
@@ -404,7 +404,7 @@
       "type": "ccqs_jump",
       "ccqs": 59.53,
       "ccqs_prev": 72.69,
-      "abs_jump": 13.17,
+      "abs_jump": 13.16,
       "roll_z": -6.26,
       "severity": "medium"
     },
@@ -594,7 +594,7 @@
       "type": "ccqs_jump",
       "ccqs": 66.67,
       "ccqs_prev": 47.33,
-      "abs_jump": 19.33,
+      "abs_jump": 19.34,
       "roll_z": 6.53,
       "severity": "medium"
     },
@@ -1274,7 +1274,7 @@
       "type": "ccqs_jump",
       "ccqs": 31.24,
       "ccqs_prev": 25.91,
-      "abs_jump": 5.33,
+      "abs_jump": 5.34,
       "roll_z": 3.32,
       "severity": "medium"
     },
