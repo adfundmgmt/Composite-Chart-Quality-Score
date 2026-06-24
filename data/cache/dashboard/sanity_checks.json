@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-22T20:33:40.554423+00:00",
+  "generated_at": "2026-06-24T00:43:51.275618+00:00",
   "passed": true,
   "n_checks": 12,
   "n_failed": 0,
@@ -76,21 +76,21 @@
     {
       "name": "features_fresh_within_5d",
       "passed": true,
-      "observed": "max date 2026-06-22 (0d old)",
+      "observed": "max date 2026-06-23 (1d old)",
       "expected": "latest features date within 5 calendar days",
       "detail": ""
     },
     {
       "name": "universe_coverage",
       "passed": true,
-      "observed": "860 tickers",
+      "observed": "859 tickers",
       "expected": "\u2265750 unique tickers with a CCQS in the last 30 trading days",
       "detail": ""
     },
     {
       "name": "latest_day_coverage",
       "passed": true,
-      "observed": "858 scored on 2026-06-22 (+0.2% vs prior 860)",
+      "observed": "835 scored on 2026-06-23 (+2.7% vs prior 858)",
       "expected": "\u2265820 tickers scored on latest date AND \u22644% day-over-day drop",
       "detail": ""
     }
