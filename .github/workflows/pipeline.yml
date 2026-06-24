@@ -2,35 +2,25 @@ name: Daily CCQS Pipeline
 
 on:
   schedule:
-    # Phase 30.7 (2026-06-02): moved from 4:05 PM ET to 4:00 PM ET
-    # = 1:00 PM PT exact, per user request.
-    # Phase 26 had moved it from 4:30 PM ET to 4:05 PM ET originally.
+    # Single daily cron, AFTER the US close in BOTH DST regimes:
+    #   21:15 UTC = 4:15 PM ET in winter (EST) / 5:15 PM ET in summer (EDT).
+    # Always at or after the 4:00 PM ET close, so today's EOD bars are
+    # available from yfinance.
     #
-    # Mon-Fri, fires at exactly 4:00 PM ET / 1:00 PM PT year-round.
-    # GitHub Actions cron is UTC and has no DST awareness, so we use
-    # TWO cron entries — one for each DST regime — and gate the actual
-    # pipeline behind a TZ-aware guard job. Only one of the two cron
-    # firings actually does work each day; the other is a no-op within
-    # ~10 seconds of the guard check.
-    #
-    #   - cron: '0 20 * * 1-5'  → 4:00 PM ET during EDT (Mar-Nov) = 1:00 PM PT
-    #   - cron: '0 21 * * 1-5'  → 4:00 PM ET during EST (Nov-Mar) = 1:00 PM PT
-    #
-    # The `guard` job below uses TZ=America/New_York to check the actual
-    # ET hour and emits should_run=true ONLY when ET hour == 16. The
-    # `refresh` job has `needs: guard` and `if: needs.guard.outputs.should_run == 'true'`,
-    # so the heavy pipeline executes exactly once per weekday at 1:00 PM PT.
-    #
-    # METHODOLOGY NOTE: 4:00 PM ET is the moment of NYSE closing auction
-    # print. yfinance closing-bar data typically has a 1-3 minute lag,
-    # so today's close may not be fully reflected if the cron fires at
-    # the second 4:00:00 PM ET. The data-quality firewall + cache-
-    # freshness gate will catch any case where today's close is missing.
-    # If this becomes a recurring issue, shift cron forward by 5 minutes
-    # (back to '5 20' / '5 21').
-    - cron: '0 20 * * 1-5'
-    - cron: '0 21 * * 1-5'
-  workflow_dispatch: {}  # manual trigger from Actions UI (bypasses guard)
+    # WHY A SINGLE CRON (2026-06-23 fix): we previously used two crons
+    # (20:00 + 21:00 UTC) plus a guard that proceeded ONLY when the ET hour
+    # was *exactly* 16, to hit 4:00 PM ET sharp in both DST regimes. But
+    # GitHub routinely delays scheduled jobs (often 30-120 min at the
+    # US-close peak), so the delayed firing landed at 17:00-18:00 ET and the
+    # exact-hour guard SKIPPED it — the daily refresh was silently dropped on
+    # many days (e.g. 06-19 and 06-23) and only landed when run manually. A
+    # single after-close cron + a tolerant guard (ET hour >= 16) runs
+    # reliably no matter how late GitHub fires it. Trade-off: the refresh is
+    # ~15-75 min after the close instead of at 4:00 sharp; the EOD data is
+    # identical either way. The data-quality + cache-freshness gates still
+    # catch any case where today's close is somehow missing.
+    - cron: '15 21 * * 1-5'
+  workflow_dispatch: {}  # manual trigger from Actions UI (always runs)
 
 # Need write access to push the refreshed dashboard cache back to main.
 permissions:
@@ -47,8 +37,9 @@ concurrency:
 
 jobs:
   # ----------------------------------------------------------------------
-  # DST-aware time guard. Always runs (cheap), but only signals
-  # should_run=true when the current ET wall-clock hour is 16 (4 PM).
+  # After-close guard. Always runs (cheap); signals should_run=true when the
+  # ET wall-clock hour is >= 16 (at or after the 4 PM close), so it tolerates
+  # GitHub's scheduled-run delays instead of skipping a late firing.
   # Manual workflow_dispatch always proceeds (bypasses the hour check).
   # ----------------------------------------------------------------------
   guard:
@@ -60,7 +51,7 @@ jobs:
       - name: Check ET hour (DST guard)
         id: tzcheck
         run: |
-          ET_HOUR=$(TZ=America/New_York date +%H)
+          ET_HOUR=$((10#$(TZ=America/New_York date +%H)))
           ET_FULL=$(TZ=America/New_York date)
           UTC_FULL=$(date -u)
           echo "UTC time: $UTC_FULL"
@@ -69,11 +60,11 @@ jobs:
           if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
             echo "Manual dispatch — proceeding regardless of hour."
             echo "should_run=true" >> "$GITHUB_OUTPUT"
-          elif [ "$ET_HOUR" = "16" ]; then
-            echo "ET hour is 16 (4 PM) — proceeding."
+          elif [ "$ET_HOUR" -ge 16 ]; then
+            echo "ET hour is $ET_HOUR (>= 16, at/after the 4 PM close) — proceeding."
             echo "should_run=true" >> "$GITHUB_OUTPUT"
           else
-            echo "ET hour is $ET_HOUR (not 16). Skipping scheduled run."
+            echo "ET hour is $ET_HOUR (before 16:00 / 4 PM close). Skipping scheduled run."
             echo "should_run=false" >> "$GITHUB_OUTPUT"
           fi
 
