@@ -425,6 +425,38 @@ def load_cached_ohlcv() -> pd.DataFrame:
     return pd.read_parquet(OHLCV_PATH)
 
 
+def _et_now() -> datetime:
+    """Current US market time (DST-aware). CCQS_NOW_ET overrides it for tests."""
+    import os
+    from zoneinfo import ZoneInfo
+    o = os.environ.get("CCQS_NOW_ET")
+    if o:
+        return datetime.fromisoformat(o).replace(tzinfo=ZoneInfo("America/New_York"))
+    return datetime.now(ZoneInfo("America/New_York"))
+
+
+def _drop_unclosed_session(long_df: pd.DataFrame, now: datetime | None = None) -> pd.DataFrame:
+    """Drop the newest bar when its session has NOT closed yet (e.g. a manual
+    mid-day run), so the pipeline scores the last COMPLETED session and never
+    publishes an intraday snapshot. The scheduled run fires after 4 PM ET, so a
+    real end-of-day bar is always kept."""
+    if long_df.empty:
+        return long_df
+    now = now or _et_now()
+    if now.hour >= 16:                       # at/after the 4 PM ET close
+        return long_df
+    dates = pd.to_datetime(long_df["date"])
+    mx = dates.max()
+    if mx.date() != now.date():              # newest bar is already a prior session
+        return long_df
+    n = int((dates == mx).sum())
+    logger.warning(
+        f"Intraday guard: dropping {n} bars dated {mx.date()} — session not "
+        f"closed (now {now:%H:%M} ET); scoring last completed session instead."
+    )
+    return long_df[dates != mx]
+
+
 def main(force: bool = False) -> int:
     universe = all_unique_tickers()
     full = universe + sorted(BENCHMARKS)
@@ -467,6 +499,10 @@ def main(force: bool = False) -> int:
             f"Last-good merge: spliced cached history for {len(recovered)} "
             f"truncated/failed ticker(s) — e.g. {sorted(recovered)[:10]}"
         )
+
+    # Never publish an unclosed (intraday) session: a mid-day manual run scores the
+    # last completed session instead. Scheduled runs fire post-close, so unaffected.
+    long_df = _drop_unclosed_session(long_df)
 
     write_outputs(
         long_df=long_df,
