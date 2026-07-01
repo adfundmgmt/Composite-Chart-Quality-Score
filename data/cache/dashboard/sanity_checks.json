@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-01T21:21:46.565748+00:00",
+  "generated_at": "2026-07-01T23:08:17.365988+00:00",
   "passed": true,
   "n_checks": 12,
   "n_failed": 0,
@@ -57,11 +57,11 @@
       "name": "index_alignment",
       "passed": true,
       "observed": {
-        "ccqs": 1547140,
-        "components": 1547140,
-        "state": 1547140,
-        "leadership": 1547140,
-        "setups": 1547140
+        "ccqs": 1555740,
+        "components": 1555740,
+        "state": 1555740,
+        "leadership": 1555740,
+        "setups": 1555740
       },
       "expected": "all (ticker,date) indexes equal length and named",
       "detail": ""
@@ -69,7 +69,7 @@
     {
       "name": "theme_ccqs_coverage",
       "passed": true,
-      "observed": "82.58% valid",
+      "observed": "82.68% valid",
       "expected": "\u226550% of theme rows have a valid theme_ccqs",
       "detail": ""
     },
