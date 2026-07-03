@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-02T22:36:38.674339+00:00",
+  "generated_at": "2026-07-03T22:45:18.387038+00:00",
   "passed": true,
   "n_checks": 12,
   "n_failed": 0,
@@ -76,7 +76,7 @@
     {
       "name": "features_fresh_within_5d",
       "passed": true,
-      "observed": "max date 2026-07-02 (0d old)",
+      "observed": "max date 2026-07-02 (1d old)",
       "expected": "latest features date within 5 calendar days",
       "detail": ""
     },
