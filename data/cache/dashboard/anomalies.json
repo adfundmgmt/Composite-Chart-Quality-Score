@@ -1,1141 +1,743 @@
 {
   "summary": {
-    "generated_at": "2026-07-08T22:39:04.613179+00:00",
-    "n_ccqs_jumps": 112,
+    "generated_at": "2026-07-09T23:11:22.923813+00:00",
+    "n_ccqs_jumps": 70,
     "n_grade_jumps": 0,
-    "n_state_flips": 1,
-    "n_total": 113,
-    "n_high_severity": 1
+    "n_state_flips": 3,
+    "n_total": 73,
+    "n_high_severity": 2
   },
   "anomalies": [
     {
-      "ticker": "BKR",
-      "date": "2026-07-08",
+      "ticker": "GTLB",
+      "date": "2026-07-09",
       "type": "ccqs_jump",
-      "ccqs": 69.54,
-      "ccqs_prev": 43.08,
-      "abs_jump": 26.46,
-      "roll_z": 4.57,
+      "ccqs": 72.27,
+      "ccqs_prev": 39.86,
+      "abs_jump": 32.41,
+      "roll_z": 11.45,
       "severity": "high"
     },
     {
-      "ticker": "ACN",
-      "date": "2026-07-08",
+      "ticker": "IONS",
+      "date": "2026-07-09",
       "type": "ccqs_jump",
-      "ccqs": 3.5,
-      "ccqs_prev": 2.85,
-      "abs_jump": 0.65,
-      "roll_z": 14.64,
+      "ccqs": 47.91,
+      "ccqs_prev": 81.7,
+      "abs_jump": 33.79,
+      "roll_z": -8.07,
+      "severity": "high"
+    },
+    {
+      "ticker": "ACI",
+      "date": "2026-07-09",
+      "type": "ccqs_jump",
+      "ccqs": 9.56,
+      "ccqs_prev": 4.68,
+      "abs_jump": 4.88,
+      "roll_z": 5.53,
       "severity": "medium"
     },
     {
-      "ticker": "AFRM",
-      "date": "2026-07-08",
+      "ticker": "AES",
+      "date": "2026-07-09",
       "type": "ccqs_jump",
-      "ccqs": 80.66,
-      "ccqs_prev": 84.08,
-      "abs_jump": 3.41,
-      "roll_z": -2.92,
+      "ccqs": 73.89,
+      "ccqs_prev": 55.94,
+      "abs_jump": 17.95,
+      "roll_z": 2.92,
       "severity": "medium"
     },
     {
       "ticker": "ALNY",
-      "date": "2026-07-08",
+      "date": "2026-07-09",
       "type": "ccqs_jump",
-      "ccqs": 23.43,
-      "ccqs_prev": 15.67,
-      "abs_jump": 7.76,
-      "roll_z": 7.74,
+      "ccqs": 39.43,
+      "ccqs_prev": 20.32,
+      "abs_jump": 19.11,
+      "roll_z": 9.58,
       "severity": "medium"
     },
     {
-      "ticker": "AMX",
-      "date": "2026-07-08",
+      "ticker": "AMN",
+      "date": "2026-07-09",
       "type": "ccqs_jump",
-      "ccqs": 84.75,
-      "ccqs_prev": 79.38,
-      "abs_jump": 5.37,
-      "roll_z": 2.78,
+      "ccqs": 96.39,
+      "ccqs_prev": 96.67,
+      "abs_jump": 0.28,
+      "roll_z": -2.53,
       "severity": "medium"
     },
     {
-      "ticker": "ANET",
-      "date": "2026-07-08",
+      "ticker": "ASML",
+      "date": "2026-07-09",
       "type": "ccqs_jump",
-      "ccqs": 90.48,
-      "ccqs_prev": 84.82,
-      "abs_jump": 5.66,
-      "roll_z": 2.6,
-      "severity": "medium"
-    },
-    {
-      "ticker": "APA",
-      "date": "2026-07-08",
-      "type": "ccqs_jump",
-      "ccqs": 79.85,
-      "ccqs_prev": 72.88,
-      "abs_jump": 6.96,
-      "roll_z": 3.48,
-      "severity": "medium"
-    },
-    {
-      "ticker": "ASR",
-      "date": "2026-07-08",
-      "type": "ccqs_jump",
-      "ccqs": 9.56,
-      "ccqs_prev": 12.69,
-      "abs_jump": 3.14,
-      "roll_z": -2.62,
-      "severity": "medium"
-    },
-    {
-      "ticker": "AVGO",
-      "date": "2026-07-08",
-      "type": "ccqs_jump",
-      "ccqs": 62.05,
-      "ccqs_prev": 49.04,
-      "abs_jump": 13.01,
-      "roll_z": 3.38,
-      "severity": "medium"
-    },
-    {
-      "ticker": "BABA",
-      "date": "2026-07-08",
-      "type": "ccqs_jump",
-      "ccqs": 17.4,
-      "ccqs_prev": 3.52,
-      "abs_jump": 13.87,
-      "roll_z": 18.24,
-      "severity": "medium"
-    },
-    {
-      "ticker": "BESIY",
-      "date": "2026-07-08",
-      "type": "ccqs_jump",
-      "ccqs": 78.14,
-      "ccqs_prev": 81.6,
-      "abs_jump": 3.46,
-      "roll_z": -2.93,
-      "severity": "medium"
-    },
-    {
-      "ticker": "BMRN",
-      "date": "2026-07-08",
-      "type": "ccqs_jump",
-      "ccqs": 45.88,
-      "ccqs_prev": 41.55,
-      "abs_jump": 4.33,
-      "roll_z": 2.67,
-      "severity": "medium"
-    },
-    {
-      "ticker": "BP",
-      "date": "2026-07-08",
-      "type": "ccqs_jump",
-      "ccqs": 47.51,
-      "ccqs_prev": 31.42,
-      "abs_jump": 16.09,
-      "roll_z": 5.25,
-      "severity": "medium"
-    },
-    {
-      "ticker": "CARR",
-      "date": "2026-07-08",
-      "type": "ccqs_jump",
-      "ccqs": 68.21,
-      "ccqs_prev": 78.21,
-      "abs_jump": 10.0,
-      "roll_z": -3.52,
-      "severity": "medium"
-    },
-    {
-      "ticker": "CBOE",
-      "date": "2026-07-08",
-      "type": "ccqs_jump",
-      "ccqs": 36.5,
-      "ccqs_prev": 32.0,
-      "abs_jump": 4.49,
-      "roll_z": 2.59,
-      "severity": "medium"
-    },
-    {
-      "ticker": "CDE",
-      "date": "2026-07-08",
-      "type": "ccqs_jump",
-      "ccqs": 16.14,
-      "ccqs_prev": 25.13,
-      "abs_jump": 8.99,
-      "roll_z": -3.87,
-      "severity": "medium"
-    },
-    {
-      "ticker": "CMG",
-      "date": "2026-07-08",
-      "type": "ccqs_jump",
-      "ccqs": 20.14,
-      "ccqs_prev": 24.74,
-      "abs_jump": 4.6,
-      "roll_z": -2.87,
-      "severity": "medium"
-    },
-    {
-      "ticker": "CMRE",
-      "date": "2026-07-08",
-      "type": "ccqs_jump",
-      "ccqs": 36.94,
-      "ccqs_prev": 28.59,
-      "abs_jump": 8.35,
-      "roll_z": 3.93,
-      "severity": "medium"
-    },
-    {
-      "ticker": "CNR",
-      "date": "2026-07-08",
-      "type": "ccqs_jump",
-      "ccqs": 21.8,
-      "ccqs_prev": 12.16,
-      "abs_jump": 9.64,
-      "roll_z": 3.59,
-      "severity": "medium"
-    },
-    {
-      "ticker": "COHU",
-      "date": "2026-07-08",
-      "type": "ccqs_jump",
-      "ccqs": 87.52,
-      "ccqs_prev": 90.58,
-      "abs_jump": 3.06,
-      "roll_z": -3.29,
-      "severity": "medium"
-    },
-    {
-      "ticker": "COP",
-      "date": "2026-07-08",
-      "type": "ccqs_jump",
-      "ccqs": 44.94,
-      "ccqs_prev": 39.31,
-      "abs_jump": 5.62,
-      "roll_z": 2.53,
-      "severity": "medium"
-    },
-    {
-      "ticker": "COPX",
-      "date": "2026-07-08",
-      "type": "ccqs_jump",
-      "ccqs": 38.01,
-      "ccqs_prev": 43.77,
-      "abs_jump": 5.77,
-      "roll_z": -2.75,
-      "severity": "medium"
-    },
-    {
-      "ticker": "COR",
-      "date": "2026-07-08",
-      "type": "ccqs_jump",
-      "ccqs": 32.34,
-      "ccqs_prev": 27.25,
-      "abs_jump": 5.09,
-      "roll_z": 2.83,
-      "severity": "medium"
-    },
-    {
-      "ticker": "COTY",
-      "date": "2026-07-08",
-      "type": "ccqs_jump",
-      "ccqs": 8.48,
-      "ccqs_prev": 12.71,
-      "abs_jump": 4.23,
-      "roll_z": -3.71,
-      "severity": "medium"
-    },
-    {
-      "ticker": "CSX",
-      "date": "2026-07-08",
-      "type": "ccqs_jump",
-      "ccqs": 93.61,
-      "ccqs_prev": 91.55,
-      "abs_jump": 2.06,
-      "roll_z": 2.57,
-      "severity": "medium"
-    },
-    {
-      "ticker": "DAC",
-      "date": "2026-07-08",
-      "type": "ccqs_jump",
-      "ccqs": 77.0,
-      "ccqs_prev": 73.53,
-      "abs_jump": 3.47,
-      "roll_z": 2.7,
-      "severity": "medium"
-    },
-    {
-      "ticker": "DASTY",
-      "date": "2026-07-08",
-      "type": "ccqs_jump",
-      "ccqs": 8.37,
-      "ccqs_prev": 12.32,
-      "abs_jump": 3.95,
-      "roll_z": -3.62,
-      "severity": "medium"
-    },
-    {
-      "ticker": "DKNG",
-      "date": "2026-07-08",
-      "type": "ccqs_jump",
-      "ccqs": 21.66,
-      "ccqs_prev": 17.82,
-      "abs_jump": 3.84,
-      "roll_z": 3.24,
-      "severity": "medium"
-    },
-    {
-      "ticker": "DLTR",
-      "date": "2026-07-08",
-      "type": "ccqs_jump",
-      "ccqs": 71.05,
-      "ccqs_prev": 64.17,
-      "abs_jump": 6.88,
-      "roll_z": 8.01,
-      "severity": "medium"
-    },
-    {
-      "ticker": "ENVA",
-      "date": "2026-07-08",
-      "type": "ccqs_jump",
-      "ccqs": 96.31,
-      "ccqs_prev": 97.03,
-      "abs_jump": 0.71,
-      "roll_z": -4.31,
-      "severity": "medium"
-    },
-    {
-      "ticker": "EOG",
-      "date": "2026-07-08",
-      "type": "ccqs_jump",
-      "ccqs": 73.88,
-      "ccqs_prev": 63.08,
-      "abs_jump": 10.8,
-      "roll_z": 4.26,
-      "severity": "medium"
-    },
-    {
-      "ticker": "ESNT",
-      "date": "2026-07-08",
-      "type": "ccqs_jump",
-      "ccqs": 50.86,
-      "ccqs_prev": 46.02,
-      "abs_jump": 4.84,
-      "roll_z": 2.58,
-      "severity": "medium"
-    },
-    {
-      "ticker": "ESTC",
-      "date": "2026-07-08",
-      "type": "ccqs_jump",
-      "ccqs": 26.43,
-      "ccqs_prev": 19.42,
-      "abs_jump": 7.01,
-      "roll_z": 5.99,
-      "severity": "medium"
-    },
-    {
-      "ticker": "EVR",
-      "date": "2026-07-08",
-      "type": "ccqs_jump",
-      "ccqs": 38.92,
-      "ccqs_prev": 53.57,
-      "abs_jump": 14.65,
-      "roll_z": -2.7,
-      "severity": "medium"
-    },
-    {
-      "ticker": "EWA",
-      "date": "2026-07-08",
-      "type": "ccqs_jump",
-      "ccqs": 45.44,
-      "ccqs_prev": 34.29,
-      "abs_jump": 11.14,
-      "roll_z": 3.77,
-      "severity": "medium"
-    },
-    {
-      "ticker": "EXP",
-      "date": "2026-07-08",
-      "type": "ccqs_jump",
-      "ccqs": 24.33,
-      "ccqs_prev": 38.9,
-      "abs_jump": 14.57,
-      "roll_z": -3.15,
-      "severity": "medium"
-    },
-    {
-      "ticker": "FAN",
-      "date": "2026-07-08",
-      "type": "ccqs_jump",
-      "ccqs": 59.92,
-      "ccqs_prev": 71.35,
-      "abs_jump": 11.43,
-      "roll_z": -2.6,
-      "severity": "medium"
-    },
-    {
-      "ticker": "FANG",
-      "date": "2026-07-08",
-      "type": "ccqs_jump",
-      "ccqs": 74.03,
-      "ccqs_prev": 58.47,
-      "abs_jump": 15.56,
-      "roll_z": 3.51,
-      "severity": "medium"
-    },
-    {
-      "ticker": "FCX",
-      "date": "2026-07-08",
-      "type": "ccqs_jump",
-      "ccqs": 51.97,
-      "ccqs_prev": 60.97,
-      "abs_jump": 9.0,
-      "roll_z": -2.82,
-      "severity": "medium"
-    },
-    {
-      "ticker": "FLNG",
-      "date": "2026-07-08",
-      "type": "ccqs_jump",
-      "ccqs": 79.4,
-      "ccqs_prev": 72.69,
-      "abs_jump": 6.71,
-      "roll_z": 2.79,
-      "severity": "medium"
-    },
-    {
-      "ticker": "FXI",
-      "date": "2026-07-08",
-      "type": "ccqs_jump",
-      "ccqs": 13.68,
-      "ccqs_prev": 8.79,
-      "abs_jump": 4.89,
-      "roll_z": 5.6,
-      "severity": "medium"
-    },
-    {
-      "ticker": "GDXJ",
-      "date": "2026-07-08",
-      "type": "ccqs_jump",
-      "ccqs": 15.59,
-      "ccqs_prev": 17.49,
-      "abs_jump": 1.9,
-      "roll_z": -2.6,
-      "severity": "medium"
-    },
-    {
-      "ticker": "GLNG",
-      "date": "2026-07-08",
-      "type": "ccqs_jump",
-      "ccqs": 78.52,
-      "ccqs_prev": 68.59,
-      "abs_jump": 9.93,
-      "roll_z": 4.96,
-      "severity": "medium"
-    },
-    {
-      "ticker": "GNRC",
-      "date": "2026-07-08",
-      "type": "ccqs_jump",
-      "ccqs": 83.38,
-      "ccqs_prev": 87.21,
-      "abs_jump": 3.83,
-      "roll_z": -2.65,
-      "severity": "medium"
-    },
-    {
-      "ticker": "GS",
-      "date": "2026-07-08",
-      "type": "ccqs_jump",
-      "ccqs": 78.76,
-      "ccqs_prev": 83.3,
-      "abs_jump": 4.54,
-      "roll_z": -3.31,
-      "severity": "medium"
-    },
-    {
-      "ticker": "GSL",
-      "date": "2026-07-08",
-      "type": "ccqs_jump",
-      "ccqs": 77.99,
-      "ccqs_prev": 69.74,
-      "abs_jump": 8.25,
-      "roll_z": 3.32,
-      "severity": "medium"
-    },
-    {
-      "ticker": "HAL",
-      "date": "2026-07-08",
-      "type": "ccqs_jump",
-      "ccqs": 67.22,
-      "ccqs_prev": 58.95,
-      "abs_jump": 8.26,
-      "roll_z": 2.6,
-      "severity": "medium"
-    },
-    {
-      "ticker": "HON",
-      "date": "2026-07-08",
-      "type": "ccqs_jump",
-      "ccqs": 20.99,
-      "ccqs_prev": 28.1,
-      "abs_jump": 7.11,
-      "roll_z": -2.93,
-      "severity": "medium"
-    },
-    {
-      "ticker": "INTC",
-      "date": "2026-07-08",
-      "type": "ccqs_jump",
-      "ccqs": 92.08,
-      "ccqs_prev": 93.53,
-      "abs_jump": 1.45,
-      "roll_z": -3.25,
-      "severity": "medium"
-    },
-    {
-      "ticker": "IRDM",
-      "date": "2026-07-08",
-      "type": "ccqs_jump",
-      "ccqs": 94.89,
-      "ccqs_prev": 95.92,
-      "abs_jump": 1.03,
-      "roll_z": -3.43,
-      "severity": "medium"
-    },
-    {
-      "ticker": "JD",
-      "date": "2026-07-08",
-      "type": "ccqs_jump",
-      "ccqs": 20.24,
-      "ccqs_prev": 10.35,
-      "abs_jump": 9.88,
-      "roll_z": 4.26,
-      "severity": "medium"
-    },
-    {
-      "ticker": "KEY",
-      "date": "2026-07-08",
-      "type": "ccqs_jump",
-      "ccqs": 62.9,
-      "ccqs_prev": 73.46,
-      "abs_jump": 10.56,
-      "roll_z": -3.13,
-      "severity": "medium"
-    },
-    {
-      "ticker": "KOF",
-      "date": "2026-07-08",
-      "type": "ccqs_jump",
-      "ccqs": 60.13,
-      "ccqs_prev": 70.32,
-      "abs_jump": 10.19,
-      "roll_z": -4.5,
-      "severity": "medium"
-    },
-    {
-      "ticker": "KWEB",
-      "date": "2026-07-08",
-      "type": "ccqs_jump",
-      "ccqs": 10.51,
-      "ccqs_prev": 7.02,
-      "abs_jump": 3.49,
-      "roll_z": 2.82,
-      "severity": "medium"
-    },
-    {
-      "ticker": "LLY",
-      "date": "2026-07-08",
-      "type": "ccqs_jump",
-      "ccqs": 91.83,
-      "ccqs_prev": 89.54,
-      "abs_jump": 2.3,
-      "roll_z": 5.63,
-      "severity": "medium"
-    },
-    {
-      "ticker": "LYB",
-      "date": "2026-07-08",
-      "type": "ccqs_jump",
-      "ccqs": 35.64,
-      "ccqs_prev": 31.62,
-      "abs_jump": 4.01,
-      "roll_z": 2.83,
-      "severity": "medium"
-    },
-    {
-      "ticker": "LYSDY",
-      "date": "2026-07-08",
-      "type": "ccqs_jump",
-      "ccqs": 67.44,
-      "ccqs_prev": 71.17,
-      "abs_jump": 3.73,
-      "roll_z": -2.95,
-      "severity": "medium"
-    },
-    {
-      "ticker": "LYV",
-      "date": "2026-07-08",
-      "type": "ccqs_jump",
-      "ccqs": 90.31,
-      "ccqs_prev": 88.03,
-      "abs_jump": 2.28,
-      "roll_z": 3.24,
-      "severity": "medium"
-    },
-    {
-      "ticker": "MAIN",
-      "date": "2026-07-08",
-      "type": "ccqs_jump",
-      "ccqs": 13.39,
-      "ccqs_prev": 20.15,
-      "abs_jump": 6.76,
-      "roll_z": -6.2,
-      "severity": "medium"
-    },
-    {
-      "ticker": "MCHI",
-      "date": "2026-07-08",
-      "type": "ccqs_jump",
-      "ccqs": 14.77,
-      "ccqs_prev": 8.58,
-      "abs_jump": 6.19,
-      "roll_z": 4.09,
-      "severity": "medium"
-    },
-    {
-      "ticker": "MCK",
-      "date": "2026-07-08",
-      "type": "ccqs_jump",
-      "ccqs": 41.58,
-      "ccqs_prev": 34.33,
-      "abs_jump": 7.25,
-      "roll_z": 2.68,
-      "severity": "medium"
-    },
-    {
-      "ticker": "MEDP",
-      "date": "2026-07-08",
-      "type": "ccqs_jump",
-      "ccqs": 58.93,
-      "ccqs_prev": 65.54,
-      "abs_jump": 6.61,
-      "roll_z": -2.71,
-      "severity": "medium"
-    },
-    {
-      "ticker": "MKTX",
-      "date": "2026-07-08",
-      "type": "ccqs_jump",
-      "ccqs": 5.97,
-      "ccqs_prev": 4.98,
-      "abs_jump": 0.99,
-      "roll_z": 2.68,
-      "severity": "medium"
-    },
-    {
-      "ticker": "MLCO",
-      "date": "2026-07-08",
-      "type": "ccqs_jump",
-      "ccqs": 10.99,
-      "ccqs_prev": 4.31,
-      "abs_jump": 6.68,
-      "roll_z": 4.87,
-      "severity": "medium"
-    },
-    {
-      "ticker": "MLM",
-      "date": "2026-07-08",
-      "type": "ccqs_jump",
-      "ccqs": 19.84,
-      "ccqs_prev": 29.73,
-      "abs_jump": 9.89,
-      "roll_z": -3.07,
-      "severity": "medium"
-    },
-    {
-      "ticker": "MPC",
-      "date": "2026-07-08",
-      "type": "ccqs_jump",
-      "ccqs": 94.11,
-      "ccqs_prev": 91.76,
-      "abs_jump": 2.34,
-      "roll_z": 3.16,
-      "severity": "medium"
-    },
-    {
-      "ticker": "MTB",
-      "date": "2026-07-08",
-      "type": "ccqs_jump",
-      "ccqs": 73.2,
-      "ccqs_prev": 80.25,
-      "abs_jump": 7.05,
-      "roll_z": -2.58,
-      "severity": "medium"
-    },
-    {
-      "ticker": "MTDR",
-      "date": "2026-07-08",
-      "type": "ccqs_jump",
-      "ccqs": 55.67,
-      "ccqs_prev": 49.39,
-      "abs_jump": 6.28,
-      "roll_z": 2.65,
-      "severity": "medium"
-    },
-    {
-      "ticker": "MTH",
-      "date": "2026-07-08",
-      "type": "ccqs_jump",
-      "ccqs": 65.48,
-      "ccqs_prev": 75.8,
-      "abs_jump": 10.32,
-      "roll_z": -4.21,
-      "severity": "medium"
-    },
-    {
-      "ticker": "NE",
-      "date": "2026-07-08",
-      "type": "ccqs_jump",
-      "ccqs": 60.27,
-      "ccqs_prev": 50.95,
-      "abs_jump": 9.32,
-      "roll_z": 3.32,
-      "severity": "medium"
-    },
-    {
-      "ticker": "NEXT",
-      "date": "2026-07-08",
-      "type": "ccqs_jump",
-      "ccqs": 68.1,
-      "ccqs_prev": 58.88,
-      "abs_jump": 9.22,
-      "roll_z": 3.37,
-      "severity": "medium"
-    },
-    {
-      "ticker": "NORW",
-      "date": "2026-07-08",
-      "type": "ccqs_jump",
-      "ccqs": 39.07,
-      "ccqs_prev": 30.71,
-      "abs_jump": 8.37,
-      "roll_z": 4.53,
-      "severity": "medium"
-    },
-    {
-      "ticker": "NTES",
-      "date": "2026-07-08",
-      "type": "ccqs_jump",
-      "ccqs": 44.57,
-      "ccqs_prev": 29.95,
-      "abs_jump": 14.62,
-      "roll_z": 2.94,
-      "severity": "medium"
-    },
-    {
-      "ticker": "NTR",
-      "date": "2026-07-08",
-      "type": "ccqs_jump",
-      "ccqs": 39.15,
-      "ccqs_prev": 30.69,
-      "abs_jump": 8.46,
-      "roll_z": 4.99,
-      "severity": "medium"
-    },
-    {
-      "ticker": "NVDA",
-      "date": "2026-07-08",
-      "type": "ccqs_jump",
-      "ccqs": 56.51,
-      "ccqs_prev": 40.15,
-      "abs_jump": 16.36,
-      "roll_z": 4.66,
-      "severity": "medium"
-    },
-    {
-      "ticker": "NXPI",
-      "date": "2026-07-08",
-      "type": "ccqs_jump",
-      "ccqs": 76.21,
-      "ccqs_prev": 70.87,
-      "abs_jump": 5.34,
-      "roll_z": 3.4,
-      "severity": "medium"
-    },
-    {
-      "ticker": "ONON",
-      "date": "2026-07-08",
-      "type": "ccqs_jump",
-      "ccqs": 9.9,
-      "ccqs_prev": 7.97,
-      "abs_jump": 1.93,
-      "roll_z": 2.89,
-      "severity": "medium"
-    },
-    {
-      "ticker": "OXY",
-      "date": "2026-07-08",
-      "type": "ccqs_jump",
-      "ccqs": 66.9,
-      "ccqs_prev": 46.99,
-      "abs_jump": 19.91,
-      "roll_z": 4.17,
-      "severity": "medium"
-    },
-    {
-      "ticker": "PAM",
-      "date": "2026-07-08",
-      "type": "ccqs_jump",
-      "ccqs": 44.81,
-      "ccqs_prev": 37.57,
-      "abs_jump": 7.24,
-      "roll_z": 2.86,
-      "severity": "medium"
-    },
-    {
-      "ticker": "PANL",
-      "date": "2026-07-08",
-      "type": "ccqs_jump",
-      "ccqs": 48.34,
-      "ccqs_prev": 35.52,
-      "abs_jump": 12.82,
-      "roll_z": 4.7,
-      "severity": "medium"
-    },
-    {
-      "ticker": "PBR",
-      "date": "2026-07-08",
-      "type": "ccqs_jump",
-      "ccqs": 79.86,
-      "ccqs_prev": 65.81,
-      "abs_jump": 14.05,
-      "roll_z": 4.8,
-      "severity": "medium"
-    },
-    {
-      "ticker": "PH",
-      "date": "2026-07-08",
-      "type": "ccqs_jump",
-      "ccqs": 60.76,
-      "ccqs_prev": 65.98,
-      "abs_jump": 5.22,
-      "roll_z": -3.64,
-      "severity": "medium"
-    },
-    {
-      "ticker": "PHM",
-      "date": "2026-07-08",
-      "type": "ccqs_jump",
-      "ccqs": 38.28,
-      "ccqs_prev": 52.16,
-      "abs_jump": 13.88,
-      "roll_z": -2.67,
-      "severity": "medium"
-    },
-    {
-      "ticker": "PINS",
-      "date": "2026-07-08",
-      "type": "ccqs_jump",
-      "ccqs": 29.79,
-      "ccqs_prev": 24.42,
-      "abs_jump": 5.37,
-      "roll_z": 3.16,
-      "severity": "medium"
-    },
-    {
-      "ticker": "PPG",
-      "date": "2026-07-08",
-      "type": "ccqs_jump",
-      "ccqs": 61.49,
-      "ccqs_prev": 70.9,
-      "abs_jump": 9.41,
-      "roll_z": -4.38,
-      "severity": "medium"
-    },
-    {
-      "ticker": "PPTA",
-      "date": "2026-07-08",
-      "type": "ccqs_jump",
-      "ccqs": 7.44,
-      "ccqs_prev": 11.94,
-      "abs_jump": 4.5,
-      "roll_z": -2.63,
-      "severity": "medium"
-    },
-    {
-      "ticker": "RIG",
-      "date": "2026-07-08",
-      "type": "ccqs_jump",
-      "ccqs": 70.94,
-      "ccqs_prev": 56.78,
-      "abs_jump": 14.16,
-      "roll_z": 3.96,
-      "severity": "medium"
-    },
-    {
-      "ticker": "RL",
-      "date": "2026-07-08",
-      "type": "ccqs_jump",
-      "ccqs": 70.48,
-      "ccqs_prev": 75.31,
-      "abs_jump": 4.82,
-      "roll_z": -2.58,
-      "severity": "medium"
-    },
-    {
-      "ticker": "RPM",
-      "date": "2026-07-08",
-      "type": "ccqs_jump",
-      "ccqs": 21.86,
-      "ccqs_prev": 31.95,
-      "abs_jump": 10.08,
-      "roll_z": -2.73,
-      "severity": "medium"
-    },
-    {
-      "ticker": "SE",
-      "date": "2026-07-08",
-      "type": "ccqs_jump",
-      "ccqs": 34.87,
-      "ccqs_prev": 27.26,
-      "abs_jump": 7.61,
-      "roll_z": 4.56,
-      "severity": "medium"
-    },
-    {
-      "ticker": "SHW",
-      "date": "2026-07-08",
-      "type": "ccqs_jump",
-      "ccqs": 34.57,
-      "ccqs_prev": 41.52,
-      "abs_jump": 6.95,
-      "roll_z": -3.48,
-      "severity": "medium"
-    },
-    {
-      "ticker": "SIL",
-      "date": "2026-07-08",
-      "type": "ccqs_jump",
-      "ccqs": 21.33,
-      "ccqs_prev": 26.78,
-      "abs_jump": 5.45,
-      "roll_z": -3.45,
-      "severity": "medium"
-    },
-    {
-      "ticker": "SLB",
-      "date": "2026-07-08",
-      "type": "ccqs_jump",
-      "ccqs": 62.44,
-      "ccqs_prev": 52.39,
-      "abs_jump": 10.05,
-      "roll_z": 2.86,
-      "severity": "medium"
-    },
-    {
-      "ticker": "SQM",
-      "date": "2026-07-08",
-      "type": "ccqs_jump",
-      "ccqs": 67.33,
-      "ccqs_prev": 62.24,
-      "abs_jump": 5.09,
-      "roll_z": 8.67,
-      "severity": "medium"
-    },
-    {
-      "ticker": "SYF",
-      "date": "2026-07-08",
-      "type": "ccqs_jump",
-      "ccqs": 23.34,
-      "ccqs_prev": 31.38,
-      "abs_jump": 8.04,
-      "roll_z": -3.46,
-      "severity": "medium"
-    },
-    {
-      "ticker": "SYK",
-      "date": "2026-07-08",
-      "type": "ccqs_jump",
-      "ccqs": 31.53,
-      "ccqs_prev": 24.56,
-      "abs_jump": 6.97,
-      "roll_z": 3.83,
-      "severity": "medium"
-    },
-    {
-      "ticker": "TEM",
-      "date": "2026-07-08",
-      "type": "ccqs_jump",
-      "ccqs": 30.86,
-      "ccqs_prev": 43.08,
-      "abs_jump": 12.23,
-      "roll_z": -3.75,
-      "severity": "medium"
-    },
-    {
-      "ticker": "TENB",
-      "date": "2026-07-08",
-      "type": "ccqs_jump",
-      "ccqs": 94.15,
-      "ccqs_prev": 97.03,
-      "abs_jump": 2.88,
-      "roll_z": -16.57,
-      "severity": "medium"
-    },
-    {
-      "ticker": "TPR",
-      "date": "2026-07-08",
-      "type": "ccqs_jump",
-      "ccqs": 65.97,
-      "ccqs_prev": 77.5,
-      "abs_jump": 11.53,
-      "roll_z": -3.91,
-      "severity": "medium"
-    },
-    {
-      "ticker": "TTE",
-      "date": "2026-07-08",
-      "type": "ccqs_jump",
-      "ccqs": 59.0,
-      "ccqs_prev": 51.92,
-      "abs_jump": 7.08,
-      "roll_z": 2.64,
-      "severity": "medium"
-    },
-    {
-      "ticker": "TUR",
-      "date": "2026-07-08",
-      "type": "ccqs_jump",
-      "ccqs": 46.98,
-      "ccqs_prev": 50.0,
-      "abs_jump": 3.02,
-      "roll_z": -2.82,
-      "severity": "medium"
-    },
-    {
-      "ticker": "TXT",
-      "date": "2026-07-08",
-      "type": "ccqs_jump",
-      "ccqs": 38.52,
-      "ccqs_prev": 44.43,
-      "abs_jump": 5.91,
-      "roll_z": -4.16,
-      "severity": "medium"
-    },
-    {
-      "ticker": "UAA",
-      "date": "2026-07-08",
-      "type": "ccqs_jump",
-      "ccqs": 73.24,
-      "ccqs_prev": 80.74,
-      "abs_jump": 7.5,
-      "roll_z": -4.09,
-      "severity": "medium"
-    },
-    {
-      "ticker": "VAL",
-      "date": "2026-07-08",
-      "type": "ccqs_jump",
-      "ccqs": 74.39,
-      "ccqs_prev": 66.1,
-      "abs_jump": 8.29,
-      "roll_z": 4.68,
-      "severity": "medium"
-    },
-    {
-      "ticker": "VALE",
-      "date": "2026-07-08",
-      "type": "ccqs_jump",
-      "ccqs": 54.14,
-      "ccqs_prev": 61.18,
-      "abs_jump": 7.04,
-      "roll_z": -4.65,
-      "severity": "medium"
-    },
-    {
-      "ticker": "VEEV",
-      "date": "2026-07-08",
-      "type": "ccqs_jump",
-      "ccqs": 24.08,
-      "ccqs_prev": 20.82,
-      "abs_jump": 3.26,
-      "roll_z": 3.24,
-      "severity": "medium"
-    },
-    {
-      "ticker": "VMC",
-      "date": "2026-07-08",
-      "type": "ccqs_jump",
-      "ccqs": 36.27,
-      "ccqs_prev": 46.3,
-      "abs_jump": 10.03,
-      "roll_z": -4.03,
-      "severity": "medium"
-    },
-    {
-      "ticker": "VNO",
-      "date": "2026-07-08",
-      "type": "ccqs_jump",
-      "ccqs": 86.47,
-      "ccqs_prev": 91.02,
-      "abs_jump": 4.55,
-      "roll_z": -2.95,
-      "severity": "medium"
-    },
-    {
-      "ticker": "WAT",
-      "date": "2026-07-08",
-      "type": "ccqs_jump",
-      "ccqs": 55.78,
-      "ccqs_prev": 63.94,
-      "abs_jump": 8.16,
+      "ccqs": 88.44,
+      "ccqs_prev": 90.33,
+      "abs_jump": 1.89,
       "roll_z": -4.2,
       "severity": "medium"
     },
     {
-      "ticker": "WDS",
-      "date": "2026-07-08",
+      "ticker": "BHP",
+      "date": "2026-07-09",
       "type": "ccqs_jump",
-      "ccqs": 61.36,
-      "ccqs_prev": 53.91,
-      "abs_jump": 7.45,
-      "roll_z": 4.26,
+      "ccqs": 75.14,
+      "ccqs_prev": 80.02,
+      "abs_jump": 4.88,
+      "roll_z": -3.41,
       "severity": "medium"
     },
     {
-      "ticker": "WPM",
-      "date": "2026-07-08",
+      "ticker": "BR",
+      "date": "2026-07-09",
       "type": "ccqs_jump",
-      "ccqs": 13.12,
-      "ccqs_prev": 18.74,
-      "abs_jump": 5.62,
-      "roll_z": -3.98,
+      "ccqs": 7.03,
+      "ccqs_prev": 5.85,
+      "abs_jump": 1.18,
+      "roll_z": 3.22,
       "severity": "medium"
     },
     {
-      "ticker": "XYL",
-      "date": "2026-07-08",
+      "ticker": "BTU",
+      "date": "2026-07-09",
       "type": "ccqs_jump",
-      "ccqs": 25.71,
-      "ccqs_prev": 21.4,
-      "abs_jump": 4.31,
-      "roll_z": 4.19,
+      "ccqs": 14.12,
+      "ccqs_prev": 8.26,
+      "abs_jump": 5.86,
+      "roll_z": 7.04,
+      "severity": "medium"
+    },
+    {
+      "ticker": "CB",
+      "date": "2026-07-09",
+      "type": "ccqs_jump",
+      "ccqs": 70.97,
+      "ccqs_prev": 79.48,
+      "abs_jump": 8.52,
+      "roll_z": -11.03,
+      "severity": "medium"
+    },
+    {
+      "ticker": "CEG",
+      "date": "2026-07-09",
+      "type": "ccqs_jump",
+      "ccqs": 8.73,
+      "ccqs_prev": 4.77,
+      "abs_jump": 3.96,
+      "roll_z": 3.48,
+      "severity": "medium"
+    },
+    {
+      "ticker": "CFG",
+      "date": "2026-07-09",
+      "type": "ccqs_jump",
+      "ccqs": 82.65,
+      "ccqs_prev": 86.39,
+      "abs_jump": 3.74,
+      "roll_z": -3.0,
+      "severity": "medium"
+    },
+    {
+      "ticker": "CHD",
+      "date": "2026-07-09",
+      "type": "ccqs_jump",
+      "ccqs": 53.56,
+      "ccqs_prev": 60.9,
+      "abs_jump": 7.34,
+      "roll_z": -2.51,
+      "severity": "medium"
+    },
+    {
+      "ticker": "CHKP",
+      "date": "2026-07-09",
+      "type": "ccqs_jump",
+      "ccqs": 11.29,
+      "ccqs_prev": 9.73,
+      "abs_jump": 1.56,
+      "roll_z": 2.76,
+      "severity": "medium"
+    },
+    {
+      "ticker": "CRM",
+      "date": "2026-07-09",
+      "type": "ccqs_jump",
+      "ccqs": 4.67,
+      "ccqs_prev": 7.34,
+      "abs_jump": 2.67,
+      "roll_z": -3.01,
+      "severity": "medium"
+    },
+    {
+      "ticker": "CSCO",
+      "date": "2026-07-09",
+      "type": "ccqs_jump",
+      "ccqs": 90.45,
+      "ccqs_prev": 88.57,
+      "abs_jump": 1.88,
+      "roll_z": 3.88,
+      "severity": "medium"
+    },
+    {
+      "ticker": "CTSH",
+      "date": "2026-07-09",
+      "type": "ccqs_jump",
+      "ccqs": 3.32,
+      "ccqs_prev": 2.81,
+      "abs_jump": 0.51,
+      "roll_z": 3.33,
+      "severity": "medium"
+    },
+    {
+      "ticker": "CX",
+      "date": "2026-07-09",
+      "type": "ccqs_jump",
+      "ccqs": 74.02,
+      "ccqs_prev": 66.31,
+      "abs_jump": 7.7,
+      "roll_z": 4.02,
+      "severity": "medium"
+    },
+    {
+      "ticker": "DK",
+      "date": "2026-07-09",
+      "type": "ccqs_jump",
+      "ccqs": 96.85,
+      "ccqs_prev": 96.67,
+      "abs_jump": 0.17,
+      "roll_z": 2.6,
+      "severity": "medium"
+    },
+    {
+      "ticker": "DSX",
+      "date": "2026-07-09",
+      "type": "ccqs_jump",
+      "ccqs": 35.63,
+      "ccqs_prev": 57.56,
+      "abs_jump": 21.93,
+      "roll_z": -3.01,
+      "severity": "medium"
+    },
+    {
+      "ticker": "EA",
+      "date": "2026-07-09",
+      "type": "ccqs_jump",
+      "ccqs": 72.4,
+      "ccqs_prev": 66.96,
+      "abs_jump": 5.44,
+      "roll_z": 3.66,
+      "severity": "medium"
+    },
+    {
+      "ticker": "ECL",
+      "date": "2026-07-09",
+      "type": "ccqs_jump",
+      "ccqs": 35.5,
+      "ccqs_prev": 40.46,
+      "abs_jump": 4.96,
+      "roll_z": -2.57,
+      "severity": "medium"
+    },
+    {
+      "ticker": "EWC",
+      "date": "2026-07-09",
+      "type": "ccqs_jump",
+      "ccqs": 75.7,
+      "ccqs_prev": 67.23,
+      "abs_jump": 8.47,
+      "roll_z": 6.06,
+      "severity": "medium"
+    },
+    {
+      "ticker": "EWJ",
+      "date": "2026-07-09",
+      "type": "ccqs_jump",
+      "ccqs": 76.05,
+      "ccqs_prev": 72.46,
+      "abs_jump": 3.59,
+      "roll_z": 3.87,
+      "severity": "medium"
+    },
+    {
+      "ticker": "EWQ",
+      "date": "2026-07-09",
+      "type": "ccqs_jump",
+      "ccqs": 62.98,
+      "ccqs_prev": 40.67,
+      "abs_jump": 22.3,
+      "roll_z": 3.57,
+      "severity": "medium"
+    },
+    {
+      "ticker": "FANUY",
+      "date": "2026-07-09",
+      "type": "ccqs_jump",
+      "ccqs": 61.46,
+      "ccqs_prev": 71.97,
+      "abs_jump": 10.51,
+      "roll_z": -2.85,
+      "severity": "medium"
+    },
+    {
+      "ticker": "FIVE",
+      "date": "2026-07-09",
+      "type": "ccqs_jump",
+      "ccqs": 30.75,
+      "ccqs_prev": 22.83,
+      "abs_jump": 7.92,
+      "roll_z": 2.8,
+      "severity": "medium"
+    },
+    {
+      "ticker": "FTI",
+      "date": "2026-07-09",
+      "type": "ccqs_jump",
+      "ccqs": 89.85,
+      "ccqs_prev": 87.3,
+      "abs_jump": 2.55,
+      "roll_z": 3.24,
+      "severity": "medium"
+    },
+    {
+      "ticker": "HPE",
+      "date": "2026-07-09",
+      "type": "ccqs_jump",
+      "ccqs": 93.43,
+      "ccqs_prev": 90.89,
+      "abs_jump": 2.54,
+      "roll_z": 3.1,
+      "severity": "medium"
+    },
+    {
+      "ticker": "HUBS",
+      "date": "2026-07-09",
+      "type": "ccqs_jump",
+      "ccqs": 6.58,
+      "ccqs_prev": 4.37,
+      "abs_jump": 2.21,
+      "roll_z": 2.83,
+      "severity": "medium"
+    },
+    {
+      "ticker": "IFF",
+      "date": "2026-07-09",
+      "type": "ccqs_jump",
+      "ccqs": 78.86,
+      "ccqs_prev": 84.18,
+      "abs_jump": 5.32,
+      "roll_z": -3.38,
+      "severity": "medium"
+    },
+    {
+      "ticker": "IHG",
+      "date": "2026-07-09",
+      "type": "ccqs_jump",
+      "ccqs": 85.82,
+      "ccqs_prev": 88.27,
+      "abs_jump": 2.46,
+      "roll_z": -3.55,
+      "severity": "medium"
+    },
+    {
+      "ticker": "ILF",
+      "date": "2026-07-09",
+      "type": "ccqs_jump",
+      "ccqs": 56.86,
+      "ccqs_prev": 49.93,
+      "abs_jump": 6.93,
+      "roll_z": 3.84,
+      "severity": "medium"
+    },
+    {
+      "ticker": "IQV",
+      "date": "2026-07-09",
+      "type": "ccqs_jump",
+      "ccqs": 61.05,
+      "ccqs_prev": 53.0,
+      "abs_jump": 8.05,
+      "roll_z": 4.0,
+      "severity": "medium"
+    },
+    {
+      "ticker": "KR",
+      "date": "2026-07-09",
+      "type": "ccqs_jump",
+      "ccqs": 18.77,
+      "ccqs_prev": 13.68,
+      "abs_jump": 5.09,
+      "roll_z": 3.91,
+      "severity": "medium"
+    },
+    {
+      "ticker": "LIN",
+      "date": "2026-07-09",
+      "type": "ccqs_jump",
+      "ccqs": 73.63,
+      "ccqs_prev": 80.49,
+      "abs_jump": 6.86,
+      "roll_z": -3.92,
+      "severity": "medium"
+    },
+    {
+      "ticker": "LMT",
+      "date": "2026-07-09",
+      "type": "ccqs_jump",
+      "ccqs": 23.77,
+      "ccqs_prev": 30.92,
+      "abs_jump": 7.15,
+      "roll_z": -2.94,
+      "severity": "medium"
+    },
+    {
+      "ticker": "LYSDY",
+      "date": "2026-07-09",
+      "type": "ccqs_jump",
+      "ccqs": 58.11,
+      "ccqs_prev": 69.27,
+      "abs_jump": 11.16,
+      "roll_z": -5.54,
+      "severity": "medium"
+    },
+    {
+      "ticker": "MAA",
+      "date": "2026-07-09",
+      "type": "ccqs_jump",
+      "ccqs": 44.78,
+      "ccqs_prev": 53.45,
+      "abs_jump": 8.67,
+      "roll_z": -4.5,
+      "severity": "medium"
+    },
+    {
+      "ticker": "MGM",
+      "date": "2026-07-09",
+      "type": "ccqs_jump",
+      "ccqs": 85.78,
+      "ccqs_prev": 83.91,
+      "abs_jump": 1.87,
+      "roll_z": 3.11,
+      "severity": "medium"
+    },
+    {
+      "ticker": "MKSI",
+      "date": "2026-07-09",
+      "type": "ccqs_jump",
+      "ccqs": 92.88,
+      "ccqs_prev": 94.08,
+      "abs_jump": 1.2,
+      "roll_z": -2.96,
+      "severity": "medium"
+    },
+    {
+      "ticker": "MU",
+      "date": "2026-07-09",
+      "type": "ccqs_jump",
+      "ccqs": 94.02,
+      "ccqs_prev": 95.07,
+      "abs_jump": 1.05,
+      "roll_z": -3.62,
+      "severity": "medium"
+    },
+    {
+      "ticker": "NEXT",
+      "date": "2026-07-09",
+      "type": "ccqs_jump",
+      "ccqs": 78.99,
+      "ccqs_prev": 68.01,
+      "abs_jump": 10.98,
+      "roll_z": 3.43,
+      "severity": "medium"
+    },
+    {
+      "ticker": "NSC",
+      "date": "2026-07-09",
+      "type": "ccqs_jump",
+      "ccqs": 78.38,
+      "ccqs_prev": 73.08,
+      "abs_jump": 5.29,
+      "roll_z": 4.03,
+      "severity": "medium"
+    },
+    {
+      "ticker": "NU",
+      "date": "2026-07-09",
+      "type": "ccqs_jump",
+      "ccqs": 25.68,
+      "ccqs_prev": 17.49,
+      "abs_jump": 8.19,
+      "roll_z": 2.92,
+      "severity": "medium"
+    },
+    {
+      "ticker": "ORCL",
+      "date": "2026-07-09",
+      "type": "ccqs_jump",
+      "ccqs": 9.08,
+      "ccqs_prev": 5.86,
+      "abs_jump": 3.22,
+      "roll_z": 4.34,
+      "severity": "medium"
+    },
+    {
+      "ticker": "OSCR",
+      "date": "2026-07-09",
+      "type": "ccqs_jump",
+      "ccqs": 96.85,
+      "ccqs_prev": 95.49,
+      "abs_jump": 1.36,
+      "roll_z": 5.23,
+      "severity": "medium"
+    },
+    {
+      "ticker": "PCG",
+      "date": "2026-07-09",
+      "type": "ccqs_jump",
+      "ccqs": 70.91,
+      "ccqs_prev": 62.9,
+      "abs_jump": 8.01,
+      "roll_z": 2.54,
+      "severity": "medium"
+    },
+    {
+      "ticker": "PDD",
+      "date": "2026-07-09",
+      "type": "ccqs_jump",
+      "ccqs": 8.43,
+      "ccqs_prev": 6.6,
+      "abs_jump": 1.83,
+      "roll_z": 3.38,
+      "severity": "medium"
+    },
+    {
+      "ticker": "PFE",
+      "date": "2026-07-09",
+      "type": "ccqs_jump",
+      "ccqs": 15.54,
+      "ccqs_prev": 13.47,
+      "abs_jump": 2.08,
+      "roll_z": 2.6,
+      "severity": "medium"
+    },
+    {
+      "ticker": "PRU",
+      "date": "2026-07-09",
+      "type": "ccqs_jump",
+      "ccqs": 69.66,
+      "ccqs_prev": 61.0,
+      "abs_jump": 8.66,
+      "roll_z": 3.88,
+      "severity": "medium"
+    },
+    {
+      "ticker": "PSA",
+      "date": "2026-07-09",
+      "type": "ccqs_jump",
+      "ccqs": 78.37,
+      "ccqs_prev": 82.92,
+      "abs_jump": 4.54,
+      "roll_z": -2.85,
+      "severity": "medium"
+    },
+    {
+      "ticker": "PYPL",
+      "date": "2026-07-09",
+      "type": "ccqs_jump",
+      "ccqs": 15.55,
+      "ccqs_prev": 13.01,
+      "abs_jump": 2.54,
+      "roll_z": 2.84,
+      "severity": "medium"
+    },
+    {
+      "ticker": "REXR",
+      "date": "2026-07-09",
+      "type": "ccqs_jump",
+      "ccqs": 14.25,
+      "ccqs_prev": 11.97,
+      "abs_jump": 2.28,
+      "roll_z": 2.64,
+      "severity": "medium"
+    },
+    {
+      "ticker": "RIO",
+      "date": "2026-07-09",
+      "type": "ccqs_jump",
+      "ccqs": 54.52,
+      "ccqs_prev": 65.76,
+      "abs_jump": 11.25,
+      "roll_z": -6.35,
+      "severity": "medium"
+    },
+    {
+      "ticker": "RNR",
+      "date": "2026-07-09",
+      "type": "ccqs_jump",
+      "ccqs": 77.97,
+      "ccqs_prev": 83.27,
+      "abs_jump": 5.3,
+      "roll_z": -2.72,
+      "severity": "medium"
+    },
+    {
+      "ticker": "SNOW",
+      "date": "2026-07-09",
+      "type": "ccqs_jump",
+      "ccqs": 87.35,
+      "ccqs_prev": 83.42,
+      "abs_jump": 3.93,
+      "roll_z": 3.69,
+      "severity": "medium"
+    },
+    {
+      "ticker": "TEAM",
+      "date": "2026-07-09",
+      "type": "ccqs_jump",
+      "ccqs": 11.7,
+      "ccqs_prev": 7.2,
+      "abs_jump": 4.51,
+      "roll_z": 3.31,
+      "severity": "medium"
+    },
+    {
+      "ticker": "TPR",
+      "date": "2026-07-09",
+      "type": "ccqs_jump",
+      "ccqs": 61.11,
+      "ccqs_prev": 65.61,
+      "abs_jump": 4.5,
+      "roll_z": -2.6,
+      "severity": "medium"
+    },
+    {
+      "ticker": "TTD",
+      "date": "2026-07-09",
+      "type": "ccqs_jump",
+      "ccqs": 3.97,
+      "ccqs_prev": 2.74,
+      "abs_jump": 1.22,
+      "roll_z": 2.83,
+      "severity": "medium"
+    },
+    {
+      "ticker": "TUR",
+      "date": "2026-07-09",
+      "type": "ccqs_jump",
+      "ccqs": 43.44,
+      "ccqs_prev": 47.24,
+      "abs_jump": 3.8,
+      "roll_z": -2.92,
+      "severity": "medium"
+    },
+    {
+      "ticker": "UAL",
+      "date": "2026-07-09",
+      "type": "ccqs_jump",
+      "ccqs": 84.94,
+      "ccqs_prev": 86.06,
+      "abs_jump": 1.13,
+      "roll_z": -3.06,
+      "severity": "medium"
+    },
+    {
+      "ticker": "ULTA",
+      "date": "2026-07-09",
+      "type": "ccqs_jump",
+      "ccqs": 7.29,
+      "ccqs_prev": 6.34,
+      "abs_jump": 0.95,
+      "roll_z": 2.6,
+      "severity": "medium"
+    },
+    {
+      "ticker": "VALE",
+      "date": "2026-07-09",
+      "type": "ccqs_jump",
+      "ccqs": 45.24,
+      "ccqs_prev": 53.46,
+      "abs_jump": 8.22,
+      "roll_z": -3.53,
+      "severity": "medium"
+    },
+    {
+      "ticker": "VSAT",
+      "date": "2026-07-09",
+      "type": "ccqs_jump",
+      "ccqs": 89.69,
+      "ccqs_prev": 92.61,
+      "abs_jump": 2.93,
+      "roll_z": -2.63,
+      "severity": "medium"
+    },
+    {
+      "ticker": "VST",
+      "date": "2026-07-09",
+      "type": "ccqs_jump",
+      "ccqs": 29.85,
+      "ccqs_prev": 21.22,
+      "abs_jump": 8.63,
+      "roll_z": 5.42,
+      "severity": "medium"
+    },
+    {
+      "ticker": "VWAGY",
+      "date": "2026-07-09",
+      "type": "ccqs_jump",
+      "ccqs": 3.14,
+      "ccqs_prev": 5.99,
+      "abs_jump": 2.85,
+      "roll_z": -3.27,
+      "severity": "medium"
+    },
+    {
+      "ticker": "WING",
+      "date": "2026-07-09",
+      "type": "ccqs_jump",
+      "ccqs": 6.99,
+      "ccqs_prev": 11.23,
+      "abs_jump": 4.24,
+      "roll_z": -3.2,
+      "severity": "medium"
+    },
+    {
+      "ticker": "WRB",
+      "date": "2026-07-09",
+      "type": "ccqs_jump",
+      "ccqs": 41.67,
+      "ccqs_prev": 32.5,
+      "abs_jump": 9.17,
+      "roll_z": 4.5,
+      "severity": "medium"
+    },
+    {
+      "ticker": "DEI",
+      "date": "2026-07-09",
+      "type": "state_flip",
+      "states": [
+        "PULLBACK",
+        "DETERIORATING",
+        "TRENDING"
+      ],
       "severity": "medium"
     },
     {
       "ticker": "FIS",
-      "date": "2026-07-08",
+      "date": "2026-07-09",
       "type": "state_flip",
       "states": [
-        "DETERIORATING",
         "TRENDING",
-        "DETERIORATING"
+        "DETERIORATING",
+        "INDETERMINATE"
+      ],
+      "severity": "medium"
+    },
+    {
+      "ticker": "ILMN",
+      "date": "2026-07-09",
+      "type": "state_flip",
+      "states": [
+        "EXHAUSTION",
+        "TRENDING",
+        "EXHAUSTION"
       ],
       "severity": "medium"
     }
