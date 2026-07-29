@@ -1,6 +1,6 @@
 {
   "summary": {
-    "generated_at": "2026-07-29T21:45:37.678980+00:00",
+    "generated_at": "2026-07-29T22:34:31.688123+00:00",
     "n_ccqs_jumps": 138,
     "n_grade_jumps": 1,
     "n_state_flips": 6,
@@ -785,7 +785,7 @@
       "ccqs": 18.22,
       "ccqs_prev": 15.66,
       "abs_jump": 2.57,
-      "roll_z": 3.53,
+      "roll_z": 3.54,
       "severity": "medium"
     },
     {
@@ -1204,7 +1204,7 @@
       "type": "ccqs_jump",
       "ccqs": 18.96,
       "ccqs_prev": 30.12,
-      "abs_jump": 11.16,
+      "abs_jump": 11.15,
       "roll_z": -2.89,
       "severity": "medium"
     },
