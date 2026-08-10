@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-07T22:25:13.713428+00:00",
+  "generated_at": "2026-08-10T22:28:03.218221+00:00",
   "passed": true,
   "n_checks": 12,
   "n_failed": 0,
@@ -57,11 +57,11 @@
       "name": "index_alignment",
       "passed": true,
       "observed": {
-        "ccqs": 1576265,
-        "components": 1576265,
-        "state": 1576265,
-        "leadership": 1576265,
-        "setups": 1576265
+        "ccqs": 1577124,
+        "components": 1577124,
+        "state": 1577124,
+        "leadership": 1577124,
+        "setups": 1577124
       },
       "expected": "all (ticker,date) indexes equal length and named",
       "detail": ""
@@ -69,14 +69,14 @@
     {
       "name": "theme_ccqs_coverage",
       "passed": true,
-      "observed": "82.92% valid",
+      "observed": "82.93% valid",
       "expected": "\u226550% of theme rows have a valid theme_ccqs",
       "detail": ""
     },
     {
       "name": "features_fresh_within_5d",
       "passed": true,
-      "observed": "max date 2026-08-07 (0d old)",
+      "observed": "max date 2026-08-10 (0d old)",
       "expected": "latest features date within 5 calendar days",
       "detail": ""
     },
@@ -90,7 +90,7 @@
     {
       "name": "latest_day_coverage",
       "passed": true,
-      "observed": "855 scored on 2026-08-07 (+0.0% vs prior 855)",
+      "observed": "853 scored on 2026-08-10 (+0.0% vs prior 853)",
       "expected": "\u2265820 tickers scored on latest date AND \u22644% day-over-day drop",
       "detail": ""
     }
