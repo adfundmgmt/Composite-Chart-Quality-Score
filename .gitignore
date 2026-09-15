@@ -92,3 +92,7 @@ data/cache/focus25_*
 
 # Research records (Phase 30R/31/33 reports, pre-registrations, data) — local only
 research_records/
+
+# private long-entry screen (8/21 EMA, CCQS gate) — local only, like focus25/short_screen
+scripts/entry_screen.py
+data/cache/entry_screen_latest.json
